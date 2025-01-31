@@ -1,5 +1,3 @@
-# Capstone-Project
-
 # Project Proposal
 ## Project Title:
   *	Online Chess App
@@ -14,6 +12,7 @@
     *	Rewatch played matches
     *	Watch famous matches between Pro Chess players
     *	Solve chess problems
+    	
 ##	Technology Stack:
   *	Frontend:
     *	React.js for UI components.
@@ -22,9 +21,10 @@
   *	Backend:
     *	NodeJs + Express
     *	Axios for Frontend integration
-    *	Socket.IO for Realtime input from the user
-  *	Own API for chess game
+    *	Socket.IO for Realtime input from the user to play the game
+    *	API: CRUD for user and admin interactions
   *	Version Control: GitHub.
+    
 ##	Features to be Implemented:
   *	Chess Game:
     *	Make a move
