@@ -95,19 +95,20 @@ DELETE /profile/admin/puzzles/:id
    
 ## Tables
 ## Users
-   name: [char]
-   email: email
-   password: [char(hash)]
-   isbanned: bool
+   name: [char]  
+   email: email  
+   password: [char(hash)]  
+   isAdmin: bool  
+   isbanned: bool  
    creationDate: date
    
 ## Matches
-   White: [char]
-   Black: [char]
-   Moves: [array]
-   result: [char]
-   date: date
-   local: [char]
+   White: [char]  
+   Black: [char]  
+   Moves: [array]  
+   result: [char]  
+   date: date  
+   local: [char]  
    hash: [hash of all columns]
    
    
