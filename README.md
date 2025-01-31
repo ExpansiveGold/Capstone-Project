@@ -48,43 +48,43 @@
 
 # API Contract
 ## Login Page
-**POST /create_account**
+POST /create_account
 
 ## USER PROFILE
 ### Configurations
-**GET /profile/:id**
-**POST /profile/:id/change_password**
-**DELETE /profile/:id/delete_account**
+GET /profile/:id
+POST /profile/:id/change_password
+DELETE /profile/:id/delete_account
 
 ### Friend List
-**GET /profile/:id/friends_list**
-**POST /profile/:id/friends_list/add**
-**DELETE /profile/:id/friends_list/remove/:id**
+GET /profile/:id/friends_list
+POST /profile/:id/friends_list/add
+DELETE /profile/:id/friends_list/remove/:id
 
 ### History
-**GET /profile/:id/history**
+GET /profile/:id/history
 
 ### Match Rewatch
-**GET /match/rewatch/:id[match]**
+GET /match/rewatch/:id[match]
 
 ## ADMIN PROFILE
-**GET /profile/admin**
+GET /profile/admin
 
 ### User List
-**GET /profile/admin/users/list**
-**POST /profile/admin/users/ban/:id**
-**DELETE /profile/admin/users/delete_account/:id**
+GET /profile/admin/users/list
+POST /profile/admin/users/ban/:id
+DELETE /profile/admin/users/delete_account/:id
 
 ### Add Historic Matches
-**GET /profile/admin/historic_matches**
-**POST /profile/admin/historic_matches/add**
-**GET /profile/admin/historic_matches/edit/:id**
-**POST /profile/admin/historic_matches/edit/:id**
-**DELETE /profile/admin/historic_matches/:id**
+GET /profile/admin/historic_matches
+POST /profile/admin/historic_matches/add
+GET /profile/admin/historic_matches/edit/:id
+POST /profile/admin/historic_matches/edit/:id
+DELETE /profile/admin/historic_matches/:id
 
 ### Add Puzzle
-**GET /profile/admin/puzzles**
-**POST /profile/admin/puzzles/add**
-**GET /profile/admin/puzzles/edit/:id**
-**POST /profile/admin/puzzles/edit/:id**
-**DELETE /profile/admin/puzzles/:id**
+GET /profile/admin/puzzles
+POST /profile/admin/puzzles/add
+GET /profile/admin/puzzles/edit/:id
+POST /profile/admin/puzzles/edit/:id
+DELETE /profile/admin/puzzles/:id
