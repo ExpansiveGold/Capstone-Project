@@ -95,6 +95,9 @@ DELETE /profile/admin/puzzles/:id
    
 ## Tables
 ## Users
+   | name | email | password | isAdmin | isBanned | creationDate |
+   | ---- | ----- | -------- | ------- | -------- | -------------|
+   | char | email | char(hash) | bool | bool | date |
    name: [char]  
    email: email  
    password: [char(hash)]  
