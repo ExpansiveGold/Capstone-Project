@@ -98,20 +98,11 @@ DELETE /profile/admin/puzzles/:id
    | name | email | password | isAdmin | isBanned | creationDate |
    | ---- | ----- | -------- | ------- | -------- | -------------|
    | char | email | char(hash) | bool | bool | date |
-   name: [char]  
-   email: email  
-   password: [char(hash)]  
-   isAdmin: bool  
-   isbanned: bool  
-   creationDate: date
    
 ## Matches
-   White: [char]  
-   Black: [char]  
-   Moves: [array]  
-   result: [char]  
-   date: date  
-   local: [char]  
+   | White | Black | Moves | Result | Date | Place |
+   | ---- | ----- | -------- | ------- | -------- | -------------|
+   | char | char | array | char | date | char |
    hash: [hash of all columns]
    
    
