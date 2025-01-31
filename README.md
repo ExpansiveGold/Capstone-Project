@@ -105,6 +105,7 @@ DELETE /profile/admin/puzzles/:id
    result: [char]
    date: date
    local: [char]
+   hash: [hash of all columns]
    
    
    
