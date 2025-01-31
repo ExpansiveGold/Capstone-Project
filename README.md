@@ -99,10 +99,9 @@ DELETE /profile/admin/puzzles/:id
    | char | email | char(hash) |  bool   |   bool   |     date     |
    
 ## Matches
-   | White | Black | Moves | Result | Date | Place |
-   | ----- | ----- | ----- | ------ | ---- | ----- |
-   | char  | char  | array |  char  | date | char  |
-   hash: [hash of all columns]
+   | White | Black | Moves | Result | Date | lenght | Place |       match hash      |
+   | ----- | ----- | ----- | ------ | ---- | ------ | ----- | --------------------- |
+   | char  | char  | array |  char  | date |  date  | char  | [hash of all columns] |
    
    
    
