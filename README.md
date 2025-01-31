@@ -20,9 +20,10 @@
     *	Styling: CSS and Bootstrap.
   *	Backend:
     *	NodeJs + Express
+    *	Database: MongoDB
+    *	API: CRUD for user and admin interactions
     *	Axios for Frontend integration
     *	Socket.IO for Realtime input from the user to play the game
-    *	API: CRUD for user and admin interactions
   *	Version Control: GitHub.
     
 ##	Features to be Implemented:
@@ -90,10 +91,7 @@ GET /profile/admin/puzzles/edit/:id
 POST /profile/admin/puzzles/edit/:id  
 DELETE /profile/admin/puzzles/:id
 
-# Database
-   MongoDB
-   
-## Tables
+# Database Tables
 ## Users
    | name | email | password | isAdmin | isBanned | creationDate |
    | ---- | ----- | -------- | ------- | -------- | -------------|
