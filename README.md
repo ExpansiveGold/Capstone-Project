@@ -91,6 +91,9 @@ POST /profile/admin/puzzles/edit/:id
 DELETE /profile/admin/puzzles/:id
 
 # Database
+   MongoDB
+   
+## Tables
 ## Users
    name: [char]
    email: email
