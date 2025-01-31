@@ -24,6 +24,7 @@
     *	API: CRUD for user and admin interactions
     *	Axios for Frontend integration
     *	Socket.IO for Realtime input from the user to play the game
+    *	Bcrypt for hashing
   *	Version Control: GitHub.
     
 ##	Features to be Implemented:
@@ -93,14 +94,14 @@ DELETE /profile/admin/puzzles/:id
 
 # Database Tables
 ## Users
-   | name | email | password | isAdmin | isBanned | creationDate |
-   | ---- | ----- | -------- | ------- | -------- | -------------|
-   | char | email | char(hash) | bool | bool | date |
+   | name | email |  password  | isAdmin | isBanned | creationDate |
+   | ---- | ----- |  --------  | ------- | -------- | -------------|
+   | char | email | char(hash) |  bool   |   bool   |     date     |
    
 ## Matches
    | White | Black | Moves | Result | Date | Place |
-   | ---- | ----- | -------- | ------- | -------- | -------------|
-   | char | char | array | char | date | char |
+   | ----- | ----- | ----- | ------ | ---- | ----- |
+   | char  | char  | array |  char  | date | char  |
    hash: [hash of all columns]
    
    
