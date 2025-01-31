@@ -1,5 +1,5 @@
 # Project Proposal
-## Project Title:
+## Project Title
   *	Online Chess App
 
 ##	Problem Statement:
@@ -56,7 +56,7 @@ GET /profile/:id
 POST /profile/:id/change_password  
 DELETE /profile/:id/delete_account  
 
-### Friend List
+### Friend List [CRUD]
 GET /profile/:id/friends_list  
 POST /profile/:id/friends_list/add  
 DELETE /profile/:id/friends_list/remove/:id  
@@ -70,19 +70,20 @@ GET /match/rewatch/:id[match]
 ## ADMIN PROFILE
 GET /profile/admin
 
-### User List
+### User List [CRUD]
 GET /profile/admin/users/list  
+POST /profile/admin/users/add  
 POST /profile/admin/users/ban/:id  
 DELETE /profile/admin/users/delete_account/:id
 
-### Add Historic Matches
+### Add Historic Matches [CRUD]
 GET /profile/admin/historic_matches  
 POST /profile/admin/historic_matches/add  
 GET /profile/admin/historic_matches/edit/:id  
 POST /profile/admin/historic_matches/edit/:id  
 DELETE /profile/admin/historic_matches/:id
 
-### Add Puzzle
+### Add Puzzle [CRUD]
 GET /profile/admin/puzzles  
 POST /profile/admin/puzzles/add  
 GET /profile/admin/puzzles/edit/:id  
