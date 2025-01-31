@@ -89,3 +89,22 @@ POST /profile/admin/puzzles/add
 GET /profile/admin/puzzles/edit/:id  
 POST /profile/admin/puzzles/edit/:id  
 DELETE /profile/admin/puzzles/:id
+
+# Database
+## Users
+   name: [char]
+   email: email
+   password: [char(hash)]
+   isbanned: bool
+   creationDate: date
+   
+## Matches
+   White: [char]
+   Black: [char]
+   Moves: [array]
+   result: [char]
+   date: date
+   local: [char]
+   
+   
+   
