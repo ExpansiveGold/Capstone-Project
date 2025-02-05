@@ -95,13 +95,13 @@ DELETE /profile/admin/puzzles/:id
 # Database Tables
 ## Users
    | name | email |  password  | isAdmin | isBanned | creationDate |
-   | ---- | ----- |  --------  | ------- | -------- | -------------|
+   | ---- | ----- | ---------- | ------- | -------- | -------------|
    | char | email | char(hash) |  bool   |   bool   |     date     |
    
 ## Matches
-   | White | Black | Moves | Result | Date | lenght | Place |        match hash       |
-   | ----- | ----- | ----- | ------ | ---- | ------ | ----- | ----------------------- |
-   | char  | char  | array |  char  | date |  date  | char  | [ hash of all columns ] |
+   | White | Black | Moves | Result | Date | lenght | Place | Tournement |        match hash       |
+   | ----- | ----- | ----- | ------ | ---- | ------ | ----- | ---------- | ----------------------- |
+   | char  | char  | array |  char  | date |  date  | char  |    char    | [ hash of all columns ] |
    
    
    
