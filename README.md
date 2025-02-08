@@ -70,27 +70,27 @@ GET /profile/:id/history
 GET /match/rewatch/:id[match]
 
 ## ADMIN PROFILE
-GET /profile/admin
+GET /admin
 
 ### User List [CRUD]
-GET /profile/admin/users/list  
-POST /profile/admin/users/add  
-POST /profile/admin/users/ban/:id  
-DELETE /profile/admin/users/delete_account/:id
+GET /admin/users/list  
+POST /admin/users/add  
+POST /admin/users/ban/:id  
+DELETE /admin/users/delete_account/:id
 
 ### Add Historic Matches [CRUD]
-GET /profile/admin/historic_matches  
-POST /profile/admin/historic_matches/add  
-GET /profile/admin/historic_matches/edit/:id  
-POST /profile/admin/historic_matches/edit/:id  
-DELETE /profile/admin/historic_matches/:id
+GET /admin/historic_matches  
+POST /admin/historic_matches/add  
+GET /admin/historic_matches/edit/:id  
+POST /admin/historic_matches/edit/:id  
+DELETE /admin/historic_matches/:id
 
 ### Add Puzzle [CRUD]
-GET /profile/admin/puzzles  
-POST /profile/admin/puzzles/add  
-GET /profile/admin/puzzles/edit/:id  
-POST /profile/admin/puzzles/edit/:id  
-DELETE /profile/admin/puzzles/:id
+GET /admin/puzzles  
+POST /admin/puzzles/add  
+GET /admin/puzzles/edit/:id  
+POST /admin/puzzles/edit/:id  
+DELETE /admin/puzzles/:id
 
 # Database Tables
 ## Users
