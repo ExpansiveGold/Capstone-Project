@@ -52,6 +52,9 @@
 ## Login Page
 POST /create_account
 
+## PLAY
+GET /match/play
+
 ## USER PROFILE
 ### Configurations
 GET /profile/:id  
@@ -67,30 +70,33 @@ DELETE /profile/:id/friends_list/remove/:id
 GET /profile/:id/history
 
 ### Match Rewatch
-GET /match/rewatch/:id[match]
+GET /match/watch/:id[match]
 
 ## ADMIN PROFILE
-GET /profile/admin
+GET /admin
 
 ### User List [CRUD]
-GET /profile/admin/users/list  
-POST /profile/admin/users/add  
-POST /profile/admin/users/ban/:id  
-DELETE /profile/admin/users/delete_account/:id
+GET /admin/users  
+GET /admin/users/add  
+POST /admin/users/add  
+POST /admin/users/ban/:id  
+DELETE /admin/users/delete/:id
 
 ### Add Historic Matches [CRUD]
-GET /profile/admin/historic_matches  
-POST /profile/admin/historic_matches/add  
-GET /profile/admin/historic_matches/edit/:id  
-POST /profile/admin/historic_matches/edit/:id  
-DELETE /profile/admin/historic_matches/:id
+GET /admin/historic_matches  
+GET /admin/historic_matches/add  
+POST /admin/historic_matches/add  
+GET /admin/historic_matches/edit/:id  
+POST /admin/historic_matches/edit/:id  
+DELETE /admin/historic_matches/delete/:id
 
 ### Add Puzzle [CRUD]
-GET /profile/admin/puzzles  
-POST /profile/admin/puzzles/add  
-GET /profile/admin/puzzles/edit/:id  
-POST /profile/admin/puzzles/edit/:id  
-DELETE /profile/admin/puzzles/:id
+GET /admin/puzzles  
+GET /admin/puzzles/add  
+POST /admin/puzzles/add  
+GET /admin/puzzles/edit/:id  
+POST /admin/puzzles/edit/:id  
+DELETE /admin/puzzles/delete/:id
 
 # Database Tables
 ## Users
