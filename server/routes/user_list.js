@@ -8,30 +8,25 @@ const router = express.Router()
 // TODO: Integrate with database
 router.route("/") // /admin/users
     .get((req, res) => {
-        res.json({'users': ['user1', 'user2', 'user3']})
+        res.send('Get all users')
     })
 
 router.route('/add')
     .post((req, res) => {
-
+        res.send('Add user')
     })
 
 router.route('/edit/:id')
     .get((req, res) => {
-        res.json({
-                'user': { 
-                    id: 1 , 
-                    data: ['user1', 'user2', 'user3']
-                }
-            })
+        res.send('Get user to edit')
     })
     .post((req, res) => {
-
+        res.send('User edited')
     })
 
 router.route('/delete/:id')
     .delete((req, res) => {
-
+        res.send('User deleted')
     })
 
 export default router;

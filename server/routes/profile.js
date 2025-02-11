@@ -21,12 +21,12 @@ router.route("/:id")
 
 router.route("/:id/change_password")
     .post((req, res) => {
-
+        res.send('Password changed')
     })
 
 router.route("/:id/delete_account")
     .delete((req, res) => {
-
+        res.send('Account deleted')
     })
 
 export default router;

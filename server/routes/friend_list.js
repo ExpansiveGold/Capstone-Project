@@ -21,12 +21,12 @@ router.route("/:id/friends")
 
 router.route("/:id/friends/add/:friendID")
     .post((req, res) => {
-
+        res.send('Friend added')
     })
 
 router.route("/:id/friends/remove/:friendID")
     .delete((req, res) => {
-
+        res.send('Friend removed')
     })
 
 export default router;

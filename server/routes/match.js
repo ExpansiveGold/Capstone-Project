@@ -7,10 +7,10 @@ const router = express.Router()
 
 router.route("/play") // /match/play
     .get((req, res) => {
-        res.json({'users': ['user1', 'user2', 'user3']})
+        res.send('Play match')
     })
 
 router.route("/watch/:id") // /match/watch/:id
     .get((req, res) => {
-        res.json({'users': ['user1', 'user2', 'user3']})
+        res.send('Watch match')
     })
