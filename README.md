@@ -76,23 +76,23 @@ GET /match/watch/:id[match]
 GET /admin
 
 ### User List [CRUD]
-GET /admin/users  
-POST /admin/users/add  
-POST /admin/users/ban/:id  
+GET    /admin/users  
+POST   /admin/users/add  
+POST   /admin/users/ban/:id  
 DELETE /admin/users/delete/:id
 
 ### Add Historic Matches [CRUD]
-GET /admin/historic_matches  
-POST /admin/historic_matches/add  
-GET /admin/historic_matches/edit/:id  
-POST /admin/historic_matches/edit/:id  
+GET    /admin/historic_matches  
+POST   /admin/historic_matches/add  
+GET    /admin/historic_matches/edit/:id  
+POST   /admin/historic_matches/edit/:id  
 DELETE /admin/historic_matches/delete/:id
 
 ### Add Puzzle [CRUD]
-GET /admin/puzzles  
-POST /admin/puzzles/add  
-GET /admin/puzzles/edit/:id  
-POST /admin/puzzles/edit/:id  
+GET    /admin/puzzles  
+POST   /admin/puzzles/add  
+GET    /admin/puzzles/edit/:id  
+POST   /admin/puzzles/edit/:id  
 DELETE /admin/puzzles/delete/:id
 
 # Database Tables
