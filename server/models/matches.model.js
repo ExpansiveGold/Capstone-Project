@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MatcheSchema = new mongoose.Schema(
+const MatchSchema = new mongoose.Schema(
     {
         white: {
             type: String,
