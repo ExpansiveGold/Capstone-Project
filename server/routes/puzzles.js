@@ -35,3 +35,5 @@ router.route('/delete/:id')
     .delete((req, res) => {
         res.send('Puzzle deleted')
     })
+
+export default router;

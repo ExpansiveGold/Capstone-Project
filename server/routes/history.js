@@ -9,3 +9,5 @@ router.route("/") // /user/:id/history
     .get((req, res) => {
         res.send('User History')
     })
+
+export default router;

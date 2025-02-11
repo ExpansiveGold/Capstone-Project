@@ -35,3 +35,5 @@ router.route('/delete/:id')
     .delete((req, res) => {
         res.send('match deleted')
     })
+
+export default router;
