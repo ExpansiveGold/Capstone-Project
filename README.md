@@ -77,14 +77,12 @@ GET /admin
 
 ### User List [CRUD]
 GET /admin/users  
-GET /admin/users/add  
 POST /admin/users/add  
 POST /admin/users/ban/:id  
 DELETE /admin/users/delete/:id
 
 ### Add Historic Matches [CRUD]
 GET /admin/historic_matches  
-GET /admin/historic_matches/add  
 POST /admin/historic_matches/add  
 GET /admin/historic_matches/edit/:id  
 POST /admin/historic_matches/edit/:id  
@@ -92,7 +90,6 @@ DELETE /admin/historic_matches/delete/:id
 
 ### Add Puzzle [CRUD]
 GET /admin/puzzles  
-GET /admin/puzzles/add  
 POST /admin/puzzles/add  
 GET /admin/puzzles/edit/:id  
 POST /admin/puzzles/edit/:id  
