@@ -6,6 +6,7 @@ const router = express.Router()
 // +--------------------+
 
 //TODO: Integrate with database
+// /user/:id/friends
 router.route("/:id/friends")
     .get((req, res) => {
         const user = req.params['id']

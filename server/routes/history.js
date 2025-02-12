@@ -5,7 +5,7 @@ const router = express.Router()
 // | User History Route |
 // +--------------------+
 
-router.route("/") // /user/:id/history
+router.route("/:id/history") // /user/:id/history
     .get((req, res) => {
         res.send('User History')
     })

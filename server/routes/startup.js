@@ -21,7 +21,7 @@ function startup(app){
 
     app.use('/user', profile) // /user/:id
     app.use('/user', friends) // /user/:id/friends
-    app.use('/user/history', history)
+    app.use('/user', history)
 
     app.use('/admin/users', users);
     app.use('/admin/historic_matches', adminHistoricMatches)
