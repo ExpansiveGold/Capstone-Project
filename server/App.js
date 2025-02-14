@@ -1,9 +1,6 @@
 import express from 'express';
-import dbconnect from './server.js'
+// import dbconnect from './server.js'
 import startup from "./routes/startup.js"
-
-// Connect to database
-dbconnect()
 
 // Start app
 const app = express();
