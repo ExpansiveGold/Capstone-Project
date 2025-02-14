@@ -1,12 +1,12 @@
 import express from 'express';
-import create_account from './create_account.js'
-import match from './match.js'
+import create_account from './create_account.routes.js'
+import match from './match.routes.js'
 import HistoricMatches from './historic_matches.js'
 import Puzzles from './puzzles.js'
-import profile from './profile.js'
-import friends from './friend_list.js'
+import profile from './profile.routes.js'
+import friends from './friends.routes.js'
 import history from './history.js'
-import users from './user_list.js'
+import users from './user.routes.js'
 import adminHistoricMatches from './admin_historic_matches.js'
 import adminPuzzles from './admin_puzzles.js'
 
