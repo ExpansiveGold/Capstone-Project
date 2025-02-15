@@ -1,4 +1,5 @@
 import express from 'express';
+import login from './login.routes.js';
 import create_account from './create_account.routes.js'
 import match from './match.routes.js'
 import HistoricMatches from './historic_matches.js'
@@ -13,6 +14,7 @@ import adminPuzzles from './admin_puzzles.js'
 function startup(app){
     app.use(express.json());
 
+    app.use('/login', login)
     app.use('/create_account', create_account);
     
     app.use('/match', match)
