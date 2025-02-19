@@ -17,6 +17,11 @@ const MatchSchema = new mongoose.Schema(
             required: [true, 'Please enter the move list']
         },
 
+        movesPgn: {
+            type: String,
+            required: [true, 'Please enter the move list']
+        },
+
         result: {
             type: String,
             required: [true, 'Please enter a result, [piece color or draw]']
@@ -26,7 +31,7 @@ const MatchSchema = new mongoose.Schema(
             type: Date
         },
 
-        lenght: {
+        duration: {
             type: Date
         },
 
@@ -34,7 +39,7 @@ const MatchSchema = new mongoose.Schema(
             type: String
         },
 
-        tournement: {
+        tournament: {
             type: String
         },
 

@@ -1,13 +1,80 @@
 import express from 'express';
+import db from '../server.js'
+import Match from '../models/matches.model.js';
+import bcrypt from 'bcrypt';
 const router = express.Router()
+
+const MatchesColl = db().collection("Matches")
 
 // +--------------------+
 // | User History Route |
 // +--------------------+
 
 router.route("/play") // /match/play
-    .get((req, res) => {
-        res.send('Play match')
+    .post((req, res) => {
+        // get info send by user
+        const info = req.body
+        // res.send('Play match')
+
+        let moves = ''
+
+        for(let i = 0; i < info.moves.lenght; i++){
+            moves += info.moves[i].board + info.moves[i].move
+        }
+        
+        // define salt rounds(how secure the encryption is)
+        const saltRounds = 10
+        // generate salt
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            if (err) {
+                res.status(500).json({message: err.message})
+            }
+
+            const date = String(Date())
+
+            const data = 
+                info.white + 
+                info.black +
+                moves +
+                info.movesPgn +
+                info.result +
+                date +
+                info.duration +
+                info.place +
+                info.tournament
+                
+            console.log(moves)
+                
+            // Hash password
+            bcrypt.hash(data, salt, async (err, hash) => {
+                if (err) {
+                    res.status(500).json({message: err.message})
+                }
+
+                const match = {
+                    white: info.white,
+                    black: info.black,
+                    moves: info.moves,
+                    movesPgn: info.movesPgn,
+                    result: info.result,
+                    creationDate: String(Date()),
+                    duration: info.duration,
+                    place: info.place,
+                    tournament: info.tournament,
+                    hash: hash
+                }
+                
+                // Create user object
+                const NewMatch = new Match(match)
+                // Insert user in database, catch for errors
+                try {
+                    const user = await MatchesColl.insertOne(NewMatch);
+                    res.status(200).json(user)
+                } catch (error) {
+                    res.status(500).json({message: error.message})
+                }
+            })
+        })
     })
 
 router.route("/watch/:id") // /match/watch/:id
