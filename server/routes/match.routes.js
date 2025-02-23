@@ -77,9 +77,15 @@ router.route("/play") // /match/play
         })
     })
 
-router.route("/watch/:id") // /match/watch/:id
-    .get((req, res) => {
-        res.send('Watch match')
+router.route("/watch/:hash") // /match/watch/:id
+    .get(async (req, res) => {
+        var query = { hash: req.params['hash'] }
+        var match = await MatchesColl.findOne(query, (err, res) => {
+            if (err) throw err;
+            console.log(res)
+            db.close()
+        })
+        res.status(200).send(match)
     })
 
 export default router;
