@@ -1,10 +1,10 @@
 import express from 'express';
 import db from '../server.js'
-import ObjectId from 'mongodb';
+import { ObjectId } from 'mongodb';
 import User from '../models/user.model.js';
 import bcrypt from 'bcrypt';
-const router = express.Router()
 
+const router = express.Router()
 const UserColl = db().collection("Users")
 
 // +-----------------------+
