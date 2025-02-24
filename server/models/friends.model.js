@@ -4,13 +4,13 @@ const FriendSchema = new mongoose.Schema(
     {
         userId: {
             type: String,
-            required: [true, 'Please enter an username']
+            required: [true]
 
         },
 
         friendId: {
             type: String,
-            required: [true, 'Please enter an email']
+            required: [true]
         }
     },
 
