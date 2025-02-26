@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const MatchSchema = new mongoose.Schema(
     {
         white: {
-            type: String,
+            type: mongoose.ObjectId,
             required: [true, 'Please enter an username']
         },
 
         black: {
-            type: String,
+            type: mongoose.ObjectId,
             required: [true, 'Please enter an username']
         },
 

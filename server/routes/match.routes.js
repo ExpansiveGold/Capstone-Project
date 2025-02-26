@@ -1,14 +1,15 @@
 import express from 'express';
 import db from '../server.js'
 import Match from '../models/matches.model.js';
+import { ObjectId } from 'mongodb';
 import bcrypt from 'bcrypt';
 const router = express.Router()
 
 const MatchesColl = db().collection("Matches")
 
-// +--------------------+
-// | User History Route |
-// +--------------------+
+// +-------------+
+// | Match Route |
+// +-------------+
 
 router.route("/play") // /match/play
     .post((req, res) => {
@@ -43,33 +44,33 @@ router.route("/play") // /match/play
                 info.place +
                 info.tournament
                 
-            console.log(moves)
-                
-            // Hash password
+            // Hash Match
             bcrypt.hash(data, salt, async (err, hash) => {
                 if (err) {
                     res.status(500).json({message: err.message})
                 }
 
                 const match = {
-                    white: info.white,
-                    black: info.black,
+                    white: new ObjectId(String(info.white)),
+                    black: new ObjectId(String(info.black)),
                     moves: info.moves,
                     movesPgn: info.movesPgn,
                     result: info.result,
-                    creationDate: String(Date()),
+                    creationDate: Date(),
                     duration: info.duration,
                     place: info.place,
                     tournament: info.tournament,
                     hash: hash
                 }
+
+                console.log(match)
                 
-                // Create user object
+                // Create match object
                 const NewMatch = new Match(match)
-                // Insert user in database, catch for errors
+                // Insert match in database, catch for errors
                 try {
-                    const user = await MatchesColl.insertOne(NewMatch);
-                    res.status(200).json(user)
+                    const match = await MatchesColl.insertOne(NewMatch);
+                    res.status(200).json(match)
                 } catch (error) {
                     res.status(500).json({message: error.message})
                 }
