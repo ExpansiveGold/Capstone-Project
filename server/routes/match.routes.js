@@ -63,8 +63,6 @@ router.route("/play") // /match/play
                     hash: hash
                 }
 
-                console.log(match)
-                
                 // Create match object
                 const NewMatch = new Match(match)
                 // Insert match in database, catch for errors
