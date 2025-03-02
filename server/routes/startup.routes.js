@@ -21,9 +21,9 @@ function startup(app){
     app.use('/historic_matches', HistoricMatches)
     app.use('/puzzles', Puzzles)
 
-    app.use('/user', profile) // /user/:id
-    app.use('/user', friends) // /user/:id/friends
-    app.use('/user', history)
+    app.use('/profile/user', profile) // /user/:id
+    app.use('/profile/user', friends) // /user/:id/friends
+    app.use('/profile/user', history) // /user/:id/history
 
     app.use('/admin/users', users);
     app.use('/admin/historic_matches', adminHistoricMatches)

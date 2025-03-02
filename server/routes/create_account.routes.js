@@ -12,6 +12,11 @@ router.route("/")
     .post((req, res) => {
         // get info send by user
         const info = req.body
+
+        if (info.username == '') res.status(500).json({message: 'Missing Username'})
+        if (info.email == '') res.status(500).json({message: 'Missing Email'})
+        if (info.password == '') res.status(500).json({message: 'Missing Password'})
+        // res.json(req.body)
         // define salt rounds(how secure the encryption is)
         const saltRounds = 10
         // generate salt
@@ -30,8 +35,8 @@ router.route("/")
                     username: info.username,
                     email: info.email,
                     password: hash,
-                    isAdmin: info.isAdmin,
-                    isBanned: info.isBanned,
+                    isAdmin: false,
+                    isBanned: false,
                     creationDate: Date()
                 })
                 // Insert user in database, catch for errors

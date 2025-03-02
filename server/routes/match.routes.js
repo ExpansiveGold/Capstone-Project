@@ -11,6 +11,28 @@ const MatchesColl = db().collection("Matches")
 // | Match Route |
 // +-------------+
 
+// [
+//     {
+//       '$lookup': {
+//         'from': 'Users', 
+//         'localField': 'userId', 
+//         'foreignField': '_id', 
+//         'as': 'userData'
+//       }
+//     }, {
+//       '$lookup': {
+//         'from': 'Users', 
+//         'localField': 'friendId', 
+//         'foreignField': '_id', 
+//         'as': 'friendData'
+//       }
+//     }, {
+//       '$unwind': {
+//         'path': '$userData'
+//       }
+//     }
+//   ]
+
 router.route("/play") // /match/play
     .post((req, res) => {
         // get info send by user

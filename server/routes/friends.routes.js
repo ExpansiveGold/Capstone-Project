@@ -1,9 +1,11 @@
 import express from 'express';
 import db from '../server.js'
 import Friends from '../models/friends.model.js';
+import { ObjectId } from 'mongodb';
 
 const router = express.Router()
 const FriendColl = db().collection("Friends")
+const UserColl = db().collection("Users")
 
 // +--------------------+
 // | User Friends Route |
@@ -15,6 +17,7 @@ router.route("/:id/friends")
     .get(async (req, res) => {
         const id = req.params['id']
         var query = { $or: [{ userId: id }, { friendId: id } ]}
+        var friends = []
 
         //Fetch data from database
         var friend = await FriendColl.find(query).toArray((err, res) => {
@@ -22,7 +25,21 @@ router.route("/:id/friends")
             console.log(res)
             db.close()
         })
-        res.status(200).send(friend)
+
+        // Fetch user data
+        for (let friendData of friend) {
+            if (friendData.userId == id) {
+                var user = await UserColl.findOne({ _id: new ObjectId(`${friendData.friendId}`) })
+                // res.send(user)
+                friends = [...friends, user]
+            } else if (friendData.friendId == id) {
+                var user = await UserColl.findOne({ _id: new ObjectId(`${friendData.userId}`) })
+                // res.send(user)
+                friends = [...friends, user]
+            }
+        }
+
+        res.status(200).send(friends)
     })
 
 router.route("/:id/friends/add/:friendId")
