@@ -36,6 +36,8 @@ router.route("/:id/change_password")
         
         if (user === null) {
             res.status(500).json({message: 'Error finding user'})
+        } else if (info.password == info.newPassword){
+            res.status(500).json({message: 'Cannot change password to the same value'})
         } else {
             // check password
             bcrypt.compare(String(info.password), user.password, (err, result) => {
@@ -106,6 +108,14 @@ router.route("/:id/delete_account")
                     })
                     res.status(200).json(users)
                     // res.send('Account deleted')
+
+                    var user = await UserColl.findOneAndDelete(query)
+            
+                    if (user === null){
+                        res.status(500).json({ message: 'An unxpected error happend. Try again later.' })
+                    } else {
+                        res.status(200).json(user)
+                    }
                 }
             })
         }
