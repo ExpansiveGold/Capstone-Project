@@ -5,21 +5,24 @@ import axios from "axios";
 
 export default function Home() {
     const [friends, setFriends] = useState([])
-    const [friendId, setFriendId] = useState()
+    const [friendId, setFriendId] = useState("")
     const [message, setMessage] = useState("");
     const { id } = useParams()
+
+    const clear = () => setTimeout(() => {
+        setMessage("")
+    }, 5000)
 
     useEffect(() => {
         axios.get(`/profile/user/${id}/friends`)
         .then((res) => {
-            setFriends(res.data)
-            console.log(res)
+            // sort friend list before storing
+            setFriends(res.data.sort((a, b) => a.username.localeCompare(b.username)));
+            console.log(res, friends)
+            clear()
         })
-    }, [])
 
-    const invite = () => {
-        console.log(friends)
-    }
+    }, [message])
 
     // function AddFriend(friendId) {
     const AddFriend = () => {
@@ -30,11 +33,22 @@ export default function Home() {
                 setMessage('Friend added')
             }
         })
+        .catch((res) => {
+            console.log(res)
+            // setMessage('User not found')
+            setMessage(res.response.data.message)
+        })
     }
 
-    function RemoveFriend(friend) {
-    // const RemoveFriend = (friendId) => {
-        axios.post(`/profile/user/${id}/friends/remove/${friend}`)
+    // function RemoveFriend(friend) {
+    const RemoveFriend = (friend) => {
+        axios.delete(`/profile/user/${id}/friends/remove/${friend}`)
+        .then((res) => {
+            console.log(res, !res.data.message)
+            if (!res.data.message) {
+                setMessage('Friend removed')
+            }
+        })
     }
 
     const friendList = []
@@ -42,7 +56,7 @@ export default function Home() {
         friendList.push(   
             <form key={friends[i]._id}>
                 <p>{friends[i].username}</p>
-                <input type="button" value="Remove" onClick={RemoveFriend(friends[i]._id)} />
+                <input type="button" value="Remove" onClick={() => RemoveFriend(friends[i]._id)} />
             </form>
         )
     }

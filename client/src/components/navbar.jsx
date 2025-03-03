@@ -1,7 +1,18 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Nav(props) {
+    const [isAdmin, setIsAdmin] = useState(false)
     const navigate = useNavigate()
+
+    useEffect(() => {
+        axios.get(`/profile/user/${props.id}`)
+        .then((res) => {
+            setIsAdmin(res.data.isAdmin)
+            console.log(res)
+        })
+    }, []) 
 
     const Home = () => {
         navigate(`/home/user/${props.id}`)
@@ -27,6 +38,16 @@ export default function Nav(props) {
         navigate(`/profile/user/${props.id}/`)
     }
 
+    const Admin = () => {
+        navigate(`/admin/user/${props.id}/`)
+    }
+
+    const admin = () => {
+        if(isAdmin){
+            return <input type="button" value="Admin" onClick={Admin} />
+        }
+    }
+
     return(
         <>
             <input type="button" value="Home" onClick={Home} />
@@ -35,6 +56,7 @@ export default function Nav(props) {
             <input type="button" value="Friends" onClick={Friends} />
             <input type="button" value="Match History" onClick={MatchHistory} />
             <input type="button" value="Profile" onClick={Profile} />
+            {admin()}
         </>
     )
 }

@@ -39,6 +39,7 @@ router.route("/:id/friends")
             }
         }
 
+        // res.status(200).send(friend)
         res.status(200).send(friends)
     })
 
@@ -47,40 +48,43 @@ router.route("/:id/friends/add/:friendId")
         const id = req.params['id']
         const friendId = req.params['friendId']
 
-        if (id == friendId) {
-            res.status(500).json({ message: 'You cannot add yourself as friend' })
-        } else {
-            var query = { 
-                $or: [
-                    { 
-                        userId: id, 
-                        friendId: friendId
-                    },
-                    { 
-                        userId: friendId, 
-                        friendId: id 
-                    } 
-                ]
-            }
-            // Check if friend is already added
-            var check = await FriendColl.find(query).toArray((err, res) => {
-                if (err) throw err;
-                console.log(res)
-                db.close()
-            })
+        var query = { email: friendId }
+        var user = await UserColl.findOne(query)
 
-            // If NULL, no friend found on database
-            if (check.length === 0) {
-                // if (check === null) {
-                    // add friend
-                var newFriend = new Friends({
-                    userId: id,
-                    friendId: friendId
-                })
-                var friend = await FriendColl.insertOne(newFriend);
-                res.status(200).json(friend)
+        if (user == null) {
+            res.status(500).json({ message: 'User not found' })
+        } else {   
+            if (id == user._id) {
+                res.status(500).json({ message: 'You cannot add yourself as friend' })
             } else {
-                res.status(500).json({ message: 'You already added this user as friend' })
+                var friendQuery = { 
+                    $or: [
+                        { 
+                            userId: id, 
+                            friendId: `${user._id}`
+                            // friendId: friendId
+                        },
+                        { 
+                            // userId: friendId, 
+                            userId: `${user._id}`, 
+                            friendId: id 
+                        } 
+                    ]
+                }
+                // Check if friend is already added
+                var check = await FriendColl.findOne(friendQuery)
+                if (check === null) {
+                        // add friend
+                    var newFriend = new Friends({
+                        userId: id,
+                        friendId: `${user._id}`
+                        // friendId: friendId
+                    })
+                    var friend = await FriendColl.insertOne(newFriend);
+                    res.status(200).json(friend)
+                } else {
+                    res.status(500).json({ message: 'You already added this user as friend' })
+                }
             }
         }
     })
@@ -106,23 +110,12 @@ router.route("/:id/friends/remove/:friendId")
                 ]
             }
             // Check if friend is already added
-            var check = await FriendColl.find(query).toArray((err, res) => {
-                if (err) throw err;
-                console.log(res)
-                db.close()
-            })
-
-            // If not NULL, friend found on database, procede to delete
-            if (check.length !== 0) {
-                // delete friend
-                var friend = await FriendColl.deleteOne(query, (err, res) => {
-                    if (err) throw err;
-                    console.log(res)
-                    db.close()
-                })
-                res.status(200).json(friend)
+            var friend = await FriendColl.findOneAndDelete(query)
+            
+            if (friend === null){
+                res.status(500).json({ message: 'Friend not found' })
             } else {
-                res.send(500).json({ message: 'Friend not found' })
+                res.status(200).json(friend)
             }
         }
     })
