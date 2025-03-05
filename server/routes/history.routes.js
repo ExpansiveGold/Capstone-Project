@@ -44,7 +44,8 @@ const FullColl = db().collection('fullMatch')
 //                 'moves': 1, 
 //                 'movesPgn': 1, 
 //                 'result': 1,
-//                 'duration': 1
+//                 'duration': 1,
+//                 'hash': 1
 //             }
 //         }
 //     ]
