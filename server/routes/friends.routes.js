@@ -16,7 +16,7 @@ const UserColl = db().collection("Users")
 router.route("/:id/friends")
     .get(async (req, res) => {
         const id = req.params['id']
-        var query = { $or: [{ userId: id }, { friendId: id } ]}
+        var query = { $or: [{ userId: id }, { friendId: id }]}
         var friends = []
 
         //Fetch data from database
@@ -25,18 +25,23 @@ router.route("/:id/friends")
             console.log(res)
             db.close()
         })
+        // return res.send(friend)
 
         // Fetch user data
         for (let friendData of friend) {
+            if (friendData == null) continue
             if (friendData.userId == id) {
                 var user = await UserColl.findOne({ _id: new ObjectId(`${friendData.friendId}`) })
-                // res.send(user)
+                if (user == null) continue
+                // return res.send(user)
                 friends = [...friends, user]
             } else if (friendData.friendId == id) {
                 var user = await UserColl.findOne({ _id: new ObjectId(`${friendData.userId}`) })
-                // res.send(user)
+                if (user == null) continue
+                // return res.send(user)
                 friends = [...friends, user]
             }
+            console.log(friends)
         }
 
         // res.status(200).send(friend)
@@ -49,6 +54,7 @@ router.route("/:id/friends/add/:friendId")
         const friendId = req.params['friendId']
 
         var query = { email: friendId }
+        // var query = { _id: id }
         var user = await UserColl.findOne(query)
 
         if (user == null) {

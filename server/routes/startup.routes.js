@@ -1,4 +1,5 @@
 import express from 'express';
+import { config } from 'dotenv';
 import login from './login.routes.js';
 import create_account from './create_account.routes.js'
 import match from './match.routes.js'
@@ -13,6 +14,7 @@ import adminPuzzles from './admin_puzzles.js'
 
 function startup(app){
     app.use(express.json());
+    config()
 
     app.use('/login', login)
     app.use('/create_account', create_account);

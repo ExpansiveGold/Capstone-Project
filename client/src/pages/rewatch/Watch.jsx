@@ -4,6 +4,7 @@ import { Chessboard } from "react-chessboard";
 import { Chess } from "chess.js";
 import { useIsMount } from '../../functions/useIsMount.jsx';
 import axios from "axios";
+import Nav from "../../components/navbar";
 
 export default function Watch() {
     const [game, setGame] = useState(new Chess()); 
@@ -11,11 +12,11 @@ export default function Watch() {
     const [moveNum, setMoveNum] = useState(0)
     const [lastPos, setLastPos] = useState(0)
     const [moves, setMoves] = useState([])
-    const { id } = useParams()
+    const { id, hash } = useParams()
     const isMount = useIsMount();
 
     useEffect(() => {
-        axios.get(`/match/watch/${id}`)
+        axios.get(`/match/watch/${hash}`)
         .then(function (response) {
             // handle success
             const move = response.data.moves
@@ -49,9 +50,12 @@ export default function Watch() {
 
     return (
         <>
+            <h1>Watch</h1>
+            <Nav id={id}/>
             <Chessboard 
                 position={position}
                 arePiecesDraggable={false}
+                boardWidth={560}
             />
             <button onClick={Undo}>Undo</button>
             <button onClick={Next}>Next</button>

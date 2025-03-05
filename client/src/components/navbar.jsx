@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 
 export default function Nav(props) {
@@ -12,51 +12,22 @@ export default function Nav(props) {
             setIsAdmin(res.data.isAdmin)
             console.log(res)
         })
+        .catch(() => {
+            navigate('/login')
+        })
     }, []) 
 
-    const Home = () => {
-        navigate(`/home/user/${props.id}`)
-    }
-
-    const HistoricMatches = () => {
-        navigate(`/historic_matches/user/${props.id}`)
-    }
-
-    const Puzzles = () => {
-        navigate(`/puzzles/user/${props.id}`)
-    }
-
-    const Friends = () => {
-        navigate(`/profile/user/${props.id}/friends`)
-    }
-
-    const MatchHistory = () => {
-        navigate(`/profile/user/${props.id}/history`)
-    }
-
-    const Profile = () => {
-        navigate(`/profile/user/${props.id}/`)
-    }
-
-    const Admin = () => {
-        navigate(`/admin/user/${props.id}/`)
-    }
-
-    const admin = () => {
-        if(isAdmin){
-            return <input type="button" value="Admin" onClick={Admin} />
-        }
-    }
-
     return(
-        <>
-            <input type="button" value="Home" onClick={Home} />
-            <input type="button" value="Historic Matches" onClick={HistoricMatches} />
-            <input type="button" value="Puzzles" onClick={Puzzles} />
-            <input type="button" value="Friends" onClick={Friends} />
-            <input type="button" value="Match History" onClick={MatchHistory} />
-            <input type="button" value="Profile" onClick={Profile} />
-            {admin()}
-        </>
+        <nav>
+            <ul>
+                <li><NavLink to={`/home/user/${props.id}`}>Home</NavLink></li>
+                <li><NavLink to={`/historic_matches/user/${props.id}`}>Historic Matches</NavLink></li>
+                <li><NavLink to={`/puzzles/user/${props.id}`}>Puzzles</NavLink></li>
+                <li><NavLink to={`/profile/user/${props.id}/friends`}>Friends</NavLink></li>
+                <li><NavLink to={`/profile/user/${props.id}/history`}>Match History</NavLink></li>
+                <li><NavLink to={`/profile/user/${props.id}/`}>Profile</NavLink></li>
+                {isAdmin ? <li><NavLink to={`/admin/user/${props.id}/`}>Admin</NavLink></li> : ''}
+            </ul>
+        </nav>
     )
 }

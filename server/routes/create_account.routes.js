@@ -9,45 +9,37 @@ const UserColl = db().collection("Users")
 UserColl.createIndex({ 'email': 1 }, { unique: true })
 
 router.route("/")
-    .post((req, res) => {
-        // get info send by user
-        const info = req.body
+    .post(async (req, res) => {
+        try {
+            // get info send by user
+            const info = req.body
 
-        if (info.username == '') res.status(500).json({message: 'Missing Username'})
-        if (info.email == '') res.status(500).json({message: 'Missing Email'})
-        if (info.password == '') res.status(500).json({message: 'Missing Password'})
-        // res.json(req.body)
-        // define salt rounds(how secure the encryption is)
-        const saltRounds = 10
-        // generate salt
-        bcrypt.genSalt(saltRounds, (err, salt) => {
-            if (err) {
-                res.status(500).json({message: err.message})
-            }
-            // Hash password
-            bcrypt.hash(String(info.password), salt, async (err, hash) => {
-                if (err) {
-                    res.status(500).json({message: err.message})
-                }
-                
-                // Create user object
-                const NewUser = new User({
-                    username: info.username,
-                    email: info.email,
-                    password: hash,
-                    isAdmin: false,
-                    isBanned: false,
-                    creationDate: Date()
-                })
-                // Insert user in database, catch for errors
-                try {
-                    const user = await UserColl.insertOne(NewUser);
-                    res.status(200).json(user)
-                } catch (error) {
-                    res.status(500).json({message: error.message})
-                }
+            if (info.username == '') return res.status(500).json({message: 'Missing Username'})
+            if (info.email == '') return res.status(500).json({message: 'Missing Email'})
+            if (info.password == '') return res.status(500).json({message: 'Missing Password'})
+
+            // generate salt
+            const salt = await bcrypt.genSalt(10)
+                // Hash password
+            const hashPass = await bcrypt.hash(String(info.password), salt)
+                    
+            // Create user object
+            const NewUser = new User({
+                username: info.username,
+                email: info.email,
+                password: hashPass,
+                isAdmin: false,
+                isBanned: false,
+                creationDate: Date()
             })
-        })
+
+            // Insert user in database
+            const user = await UserColl.insertOne(NewUser);
+            res.status(200).json({ message: "User registered" })
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({ message: error.message })
+        }
     })
 
 export default router;

@@ -15,6 +15,10 @@ export default function Login() {
             password: password
         })
         .then((res) => {
+            if (res.data.isBanned) {
+                setMessage('This user is banned')
+                return
+            }
             console.log(res, !res.data.message)
             if (!res.data.message) {
                 navigate(`/home/user/${res.data._id}`)        

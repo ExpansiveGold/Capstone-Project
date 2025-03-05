@@ -9,23 +9,19 @@ export default function Home() {
     const [message, setMessage] = useState("");
     const { id } = useParams()
 
-    const clear = () => setTimeout(() => {
-        setMessage("")
-    }, 5000)
-
     useEffect(() => {
         axios.get(`/profile/user/${id}/friends`)
         .then((res) => {
             // sort friend list before storing
             setFriends(res.data.sort((a, b) => a.username.localeCompare(b.username)));
             console.log(res, friends)
-            clear()
         })
 
     }, [message])
 
     // function AddFriend(friendId) {
     const AddFriend = () => {
+        setMessage("")
         axios.post(`/profile/user/${id}/friends/add/${friendId}`)
         .then((res) => {
             console.log(res, !res.data.message)
@@ -42,6 +38,7 @@ export default function Home() {
 
     // function RemoveFriend(friend) {
     const RemoveFriend = (friend) => {
+        setMessage("")
         axios.delete(`/profile/user/${id}/friends/remove/${friend}`)
         .then((res) => {
             console.log(res, !res.data.message)

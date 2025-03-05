@@ -1,5 +1,5 @@
 // import Index from '../index/index.jsx';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, redirect } from "react-router-dom";
 import Login from '../login/login.jsx';
 import Home from '../home/home.jsx';
 import CreateAccount from '../create_account/create_account.jsx'
@@ -17,10 +17,12 @@ export default function App() {
             <Routes>
                 {/* <Route exact path="/" element={<Index />}> */}
                 <Route exact path="/">
+                    {/* <redirect to={'/login'} />
+                </Route> */}
                     <Route index path='login' element={<Login />} />
                     <Route path='create_account' element={<CreateAccount />} />
                     <Route path='match/play' element={<Chess />} />
-                    <Route path='match/watch/:id' element={<Watch />} />
+                    <Route path='user/:id/match/watch/:hash' element={<Watch />} />
                     <Route path='home/user/:id' element={<Home />} />
                     <Route path='historic_matches/user/:id' element={<Building />} />
                     <Route path='puzzles/user/:id' element={<Building />} />
