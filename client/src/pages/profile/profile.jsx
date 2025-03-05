@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 import Nav from "../../components/navbar";
 import axios from "axios";
 
@@ -10,8 +12,8 @@ export default function Profile() {
     const [passwordCheck, setPasswordCheck] = useState('')
     const [message, setMessage] = useState('')
     const [delMsg, setDelMsg] = useState('')
-    const { id } = useParams()
     const navigate = useNavigate()
+    const { id } = useParams()
 
     useEffect(() => {
         axios.get(`/profile/user/${id}`)
@@ -41,7 +43,7 @@ export default function Profile() {
 
     const delAccount = () => {
         axios.delete(`/profile/user/${id}/delete_account`, {
-            password: password
+            password: passwordCheck
         })
         .then((res) => {
             console.log(res, !res.data.message)
@@ -87,19 +89,36 @@ export default function Profile() {
                     <input type="button" value="Change Password" onClick={changePass} />
                 </form>
                 <hr />
-                <form>
+                <div>
                     <h2>Delete account</h2>
                     <p>{delMsg}</p>
-                    <label htmlFor="password">Please enter your password:</label>
+                    <Popup trigger={<button>Open</button>} modal nested>
+                        {close => (
+                            <div>
+                                <h5>Atention!</h5>
+                                <p>This action is not reversable</p>
+                                <label htmlFor="password">Please enter your password:</label><br />
+                                <input 
+                                    type="text" 
+                                    value={passwordCheck}
+                                    id='password'
+                                    onChange={(e) => setPasswordCheck(e.target.value)}
+                                />
+                                <button className="button" onClick={close}>Cancel</button>
+                                <input type="button" value="Delete account" onClick={delAccount} />
+                            </div>
+                        )}
+                    </Popup>
+                    {/* <label htmlFor="password">Please enter your password:</label>
                     <input 
                         type="text" 
                         value={passwordCheck}
                         id='password'
                         onChange={(e) => setPasswordCheck(e.target.value)}
-                        required
+                        
                     />
-                    <input type="button" value="Delete account" onClick={delAccount} />
-                </form>
+                    <input type="button" value="Delete account" onClick={delAccount} /> */}
+                </div>
                 <hr />
                 <h2>Log out</h2>
                 <input type="button" value="Log out" onClick={()=> navigate('/login')} />

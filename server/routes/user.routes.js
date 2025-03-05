@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 
 const router = express.Router()
 const UserColl = db().collection("Users")
+const FriendColl = db().collection("Friends")
 
 // +-----------------------+
 // | Admin User CRUD Route |
@@ -13,6 +14,7 @@ const UserColl = db().collection("Users")
 
 router.route("/") // /admin/users
     .get(async (req, res) => {
+        console.log(res.user)
         var users = await UserColl.find({}).toArray((err, res) => {
             if (err) throw err;
             console.log(res)
@@ -79,12 +81,13 @@ router.route('/edit/:id')
 router.route('/delete/:id')
     .delete(async (req, res) => {
         var query = { _id: new ObjectId(req.params['id']) }
-        var users = await UserColl.deleteOne(query, (err, res) => {
-            if (err) throw err;
-            console.log(res)
-            db.close()
+        var user = await UserColl.findOneAndDelete(query)
+        if (!user) return res.status(500).json({ message: 'An unxpected error happend. Try again later.' })
+
+        res.status(200).json({ 
+            user: user, 
+            message: 'User deleted'
         })
-        res.status(200).send(users)
     })
 
 export default router;

@@ -1,7 +1,7 @@
 import express from 'express';
 import db from '../server.js'
-// import ObjectId from 'mongodb';
-import mongo from 'mongodb';
+import { ObjectId } from 'mongodb';
+// import mongo from 'mongodb';
 import bcrypt from 'bcrypt';
 
 const router = express.Router()
@@ -16,7 +16,7 @@ const UserColl = db().collection("Users")
 router.route("/:id")
     .get(async (req, res) => {
         // var query = { _id: req.params['id'] }
-        var query = { _id: new mongo.ObjectId(req.params['id']) }
+        var query = { _id: new ObjectId(req.params['id']) }
         var user = await UserColl.findOne(query)
         if (user === null) {
             res.status(500).json({message: 'Error finding user'})
@@ -31,7 +31,7 @@ router.route("/:id/change_password")
         const info = req.body
         
         // Get user info
-        var query = { _id: new mongo.ObjectId(req.params['id']) }
+        var query = { _id: new ObjectId(req.params['id']) }
         var user = await UserColl.findOne(query)
         
         if (user === null) {
@@ -85,40 +85,23 @@ router.route("/:id/change_password")
 router.route("/:id/delete_account")
     .delete(async (req, res) => {
         // get info send by user
-        const info = req.body
+        const { password } = req.body
         
         // Get user info
-        var query = { _id: new mongo.ObjectId(req.params['id']) }
+        var query = { _id: new ObjectId(req.params['id']) }
         var user = await UserColl.findOne(query)
         
-        if (user === null) {
-            res.status(500).json({message: 'Error finding user'})
-        } else {            
-            // check password
-            bcrypt.compare(String(info.password), user.password, async (err, result) => {
-                if (err) {
-                    res.status(500).json({message: err.message})
-                }
-                // User found
-                if (result) {
-                    var users = await UserColl.deleteOne(query, (err, res) => {
-                        if (err) throw err;
-                        console.log(res)
-                        db.close()
-                    })
-                    res.status(200).json(users)
-                    // res.send('Account deleted')
+        if (!user) return res.status(400).json({message: 'Error while deleting account'})
 
-                    var user = await UserColl.findOneAndDelete(query)
-            
-                    if (user === null){
-                        res.status(500).json({ message: 'An unxpected error happend. Try again later.' })
-                    } else {
-                        res.status(200).json(user)
-                    }
-                }
-            })
-        }
+        // check password
+        const validPass = bcrypt.compare(String(password), user.password)
+        if (!validPass) return res.status(400).json({message: 'Invalid password.'})
+
+        var userDel = await UserColl.findOneAndDelete(query)
+
+        if (!userDel) return res.status(500).json({ message: 'An unxpected error happend. Try again later.' })
+        
+        res.status(200).json(userDel)
     })
 
 export default router;
