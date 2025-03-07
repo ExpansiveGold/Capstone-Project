@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Nav from "../../components/navbar";
+import Nav from "../../components/navbar/navbar.jsx";
 import axios from "axios";
 
 export default function History() {

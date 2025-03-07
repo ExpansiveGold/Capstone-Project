@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import './login.css'
 import axios from "axios";
 
 export default function Login() {
@@ -35,29 +36,35 @@ export default function Login() {
     }
 
     return(
-        <>
-            <h1>Login</h1>
-            <p>{message}</p>
-            <form>
-                <label htmlFor="email">Email:</label>
-                <input 
-                    type="text" 
-                    value={email}
-                    id='email'
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <label htmlFor="password">Password:</label>
-                <input 
-                    type="text" 
-                    value={password}
-                    id='password'
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <input type="button" value="Login" onClick={login} />
-                <p>Don't have an account? <a type="button" onClick={createAccount}>Register</a></p>
+        <div className='center center-text'>
+            <form className='form'>
+                <h1 className='title' style={message === '' ? {marginBottom: '5%'} : {marginBottom: '2%'}}>Login</h1>
+                <p className='message'>{message}</p>
+                <div className='input'>
+                    <label htmlFor="email">Email:</label>
+                    <input 
+                        className='input-box'
+                        type="text" 
+                        value={email}
+                        id='email'
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className='input'>
+                    <label htmlFor="password">Password:</label>
+                    <input 
+                        className='input-box mb-10'
+                        type="text" 
+                        value={password}
+                        id='password'
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <p className='button mb-10'onClick={login}>Login</p>
+                <p>Don't have an account? <a type="button" className='nav' onClick={createAccount}>Register</a></p>
             </form>
-        </>
+        </div>
     )
 }

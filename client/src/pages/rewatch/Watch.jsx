@@ -4,7 +4,7 @@ import { Chessboard } from "react-chessboard";
 import { Chess } from "chess.js";
 import { useIsMount } from '../../functions/useIsMount.jsx';
 import axios from "axios";
-import Nav from "../../components/navbar";
+import Nav from "../../components/navbar/navbar.jsx";
 
 export default function Watch() {
     const [game, setGame] = useState(new Chess()); 

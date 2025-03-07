@@ -1,0 +1,101 @@
+.profile {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.form-profile {
+    width: 680px;
+    height: 680px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 20px 15px 20px 20px;
+    background-color: #262522;
+    padding: 3%;
+    border-radius: 15px;
+}
+
+.popup-content {
+    /* height: 560px; */
+    display: flex;
+    width: auto;
+    background-color: #302e2b;
+    color: aliceblue;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+.align{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.passInput {
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    outline-style: none;
+    /* font-size: large; */
+    margin-top: 3%;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.formItem {
+    width: 40%;
+}
+
+.w45 {
+    width: 45%;
+}
+
+.buttonDel {
+    height: 45px;
+    padding: 2% 5%;
+    background-color: #d43030;
+    border-radius: 5px;
+}
+
+.buttonDel:hover {
+    cursor: pointer;
+    background-color: #d4303077;
+}
+
+.buttonForm {
+    height: 45px;
+    padding: 2% 5%;
+    background-color: #81B64C;
+    border-radius: 5px;
+}
+
+.buttonForm:hover {
+    cursor: pointer;
+    background-color: #81B64C77;
+}
+
+.center-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.flexVertical{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}

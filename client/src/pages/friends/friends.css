@@ -1,0 +1,48 @@
+.friends {
+    height: 100%;
+    display: flex;
+}
+
+.form-friends {
+    height: 680px;
+    width: 680px;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    padding: 25px 20px 25px 25px;
+    background-color: #262522;
+    border-radius: 15px;
+}
+
+.addFriend {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 6px;
+}
+
+.mb-10{
+    margin-bottom: 10px;
+}
+
+.input-friend {
+    width: 80%;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    outline-style: none;
+    font-size: large;
+}
+
+.friend-list {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-size: larger;
+}
+

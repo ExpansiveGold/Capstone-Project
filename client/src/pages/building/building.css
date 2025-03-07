@@ -1,0 +1,18 @@
+.building {
+    height: 100%;
+    display: flex;
+    /* justify-content:space-between; */
+}
+
+/* .center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.form-building {
+    background-color: #262522;
+    padding: 3%;
+    border-radius: 15px;
+}

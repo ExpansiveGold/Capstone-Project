@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Nav from "../../components/navbar"
+import Nav from "../../components/navbar/navbar.jsx"
 import Popup from 'reactjs-popup';
 import axios from "axios";
+import './admin.css'
 
 export default function Admin(){
     const [users, setUsers] = useState([])
@@ -54,27 +55,30 @@ export default function Admin(){
     for (let i = 0; i < users.length; i++) {
         if (users[i]._id == id) continue
         userList.push(   
-            <div key={users[i]._id}>
+            <div className="user-list" key={users[i]._id}>
                 <p>{users[i].username}</p>
                 <p>{users[i].email}</p>
-                <Popup trigger={<button>Edit</button>} modal nested>
+                <Popup trigger={<p className="button">Edit</p>} modal nested>
                     {close => (
-                        <div>
+                        <div className="">
+                            <h1 className='title' style={message === '' ? {marginBottom: '5%'} : {marginBottom: '2%'}}>Permissions</h1>
                             <p>{ message }</p>
-                            <div>
-                                <p>Change admin permissions</p>
-                                <input type="button" value={users[i].isAdmin ? 'Revoke' : 'Give'} onClick={() => {admin(users[i]._id, users[i].isAdmin)}}/>
+                            <div className="permissions">
+                                <p className="perBtn hv-text-center">Change admin permissions</p>
+                                <p className="buttonDel perBtn center-text" onClick={() => {admin(users[i]._id, users[i].isAdmin)}}>{users[i].isAdmin ? 'Revoke' : 'Give'}</p>
                             </div>
-                            <div>
-                                <p>Change account status</p>
-                                <input type="button" value={users[i].isBanned ? 'Unban' : 'Ban'} onClick={() => {ban(users[i]._id, users[i].isBanned)}}/>
-                                <Popup trigger={<button>Delete Account</button>} modal nested>
+                            <div className="permissions">
+                                <p className="perBtn">Change account status</p>
+                                <p className="buttonDel perBtn center-text" onClick={() => {ban(users[i]._id, users[i].isBanned)}}>{users[i].isBanned ? 'Unban' : 'Ban'}</p>
+                            </div>
+                            <div className="buttons">
+                                <Popup trigger={<p className="buttonDel perBtn center-text">Delete Account</p>} modal nested>
                                     <h5>Atention!</h5>
                                     <p>This action is not reversable. Are you sure you want to procede?</p>
-                                    <input type="button" value="Delete account" onClick={() => {delAccount(users[i]._id);close()}} />
-                                    <button className="button" onClick={close}>Cancel</button>
+                                    <p className="buttonDel center-text" onClick={() => {delAccount(users[i]._id);close()}}>Delete account</p>
+                                    <p className="buttonForm center-text" onClick={close}>Cancel</p>
                                 </Popup>
-                                <button className="button" onClick={close}>Cancel</button>
+                                <p className="buttonForm perBtn center-text" onClick={close}>Cancel</p>
                             </div>
                         </div>
                     )}
@@ -84,11 +88,18 @@ export default function Admin(){
     }
 
     return(
-        <>
-            <h1>Admin</h1>
+        <div className="admin">
+            {/* <h1>Admin</h1> */}
             <Nav id={id} />
-            <p>{ message }</p>
-            { userList }
-        </>
+            <div className="center">
+                <div className="form-users">
+                    <h1 className="mb-10 center-text">Users</h1>
+                    <p>{ message }</p>
+                    <div className="scroll">
+                        { userList }
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
+import './navbar.css'
 import axios from "axios";
 
 export default function Nav(props) {

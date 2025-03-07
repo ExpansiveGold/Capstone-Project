@@ -19,7 +19,7 @@ export default function CreateAccount() {
         .then((res) => {
             console.log(res, !res.data.message)
             if (!res.data.message) {
-                login()
+                navigate('/login')
             } 
         })
         .catch((res) => {
@@ -33,42 +33,52 @@ export default function CreateAccount() {
     }
     
     const login = () => {
-        navigate("/Login")
+        navigate("/login")
     }
 
     return(
-        <>
-            <h1>Create Account</h1>
-            <p>{message}</p>
-            <form>
-                <label htmlFor="username">Username:</label>
-                <input 
-                    type="text" 
-                    value={username}
-                    id='username'
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-                <label htmlFor="email">Email:</label>
-                <input 
-                    type="text" 
-                    value={email}
-                    id='email'
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <label htmlFor="password">Password:</label>
-                <input 
-                    type="text" 
-                    value={password}
-                    id='password'
-                    onChange={(e) => setPassword(e.target.value)}
-                    
-                />
-                <input type="button" value="Login" onClick={createAccount} />
-                <p>Have an account? <a type="button" onClick={login}>Login</a></p>
+        <div className='center center-text'>
+            <form className='form'>
+                <h1 className='title' style={message === '' ? {marginBottom: '5%'} : {marginBottom: '2%'}}>Create Account</h1>
+                <p className='message'>{message}</p>
+                <div className='input'>
+                    <label htmlFor="username">Username:</label>
+                    <input 
+                        className='input-box'
+                        type="text" 
+                        value={username}
+                        id='username'
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className='input'>
+                    <label htmlFor="email">Email:</label>
+                    <input 
+                        className='input-box'
+                        type="text" 
+                        value={email}
+                        id='email'
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className='input'>
+                    <label htmlFor="password">Password:</label>
+                    <input 
+                        className='input-box mb-10'
+                        type="text" 
+                        value={password}
+                        id='password'
+                        onChange={(e) => setPassword(e.target.value)}
+                        
+                    />
+                </div>
+                {/* <input type="button" value="Login" onClick={createAccount} /> */}
+                <p className='button mb-10'onClick={createAccount}>Create Account</p>
+                <p>Have an account? <a type="button" className='nav' onClick={login}>Login</a></p>
                 
             </form>
-        </>
+        </div>
     )
 }

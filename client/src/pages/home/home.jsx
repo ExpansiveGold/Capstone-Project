@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Chessboard } from "react-chessboard";
 import { useParams } from "react-router-dom";
-import Nav from "../../components/navbar";
+import './home.css'
+import Nav from "../../components/navbar/navbar.jsx";
 import axios from "axios";
 
 export default function Home() {
@@ -23,36 +24,32 @@ export default function Home() {
     const friendList = []
     for (let i = 0; i < friends.length; i++ ) {
         friendList.push(   
-            <div key={friends[i]._id}>
+            <div className="friend" key={friends[i]._id}>
                 <p>{friends[i].username}</p>
-                <input type="button" value='invite' onClick={invite} />
+                <p className="button" onClick={invite}>Invite</p>
             </div>
         )
     }
 
     return(
-        <>
-            <h1>Home</h1>
+        <div className="home">
+            {/* <h1>Home</h1> */}
             <Nav id={id}/>
-            <Chessboard 
-                position={'start'}
-                arePiecesDraggable={false}
-                boardWidth={560}
-            />
-            <div>
-                { friendList }
+            <div className="main">
+                <div>
+                    <Chessboard 
+                        position={'start'}
+                        arePiecesDraggable={false}
+                        boardWidth={680}
+                        customBoardStyle={{borderRadius: '3px', border: '1px'}}
+                        />
+                </div>
+                <div className="form-home"> 
+                    <div className="scroll">
+                        { friendList }
+                    </div>
+                </div>
             </div>
-            {/* 
-                +--------+---------------------------+
-                | navbar | +-------------+---------+ |
-                |        | | board       | friends | |
-                |        | | -fixed      |   to    | |
-                |        | |             |  play   | |
-                |        | |             |         | |
-                |        | |             |         | |
-                |        | +-------------+---------+ |
-                +--------+---------------------------+ 
-            */}
-        </>
+        </div>
     )
 }

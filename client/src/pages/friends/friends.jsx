@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Nav from "../../components/navbar";
+import Nav from "../../components/navbar/navbar.jsx";
 import axios from "axios";
+import './friends.css'
 
 export default function Home() {
     const [friends, setFriends] = useState([])
@@ -51,30 +52,40 @@ export default function Home() {
     const friendList = []
     for (let i = 0; i < friends.length; i++ ) {
         friendList.push(   
-            <form key={friends[i]._id}>
+            <form className="friend-list" key={friends[i]._id}>
                 <p>{friends[i].username}</p>
-                <input type="button" value="Remove" onClick={() => RemoveFriend(friends[i]._id)} />
+                <p className="button" onClick={() => RemoveFriend(friends[i]._id)}>Remove</p>
             </form>
         )
     }
 
     return(
-        <>
-            <h1>Friends</h1>
+        <div className="friends">
+            {/* <h1>Friends</h1> */}
             <Nav id={id}/>
-            <div>
-                <p>{message}</p>
-                <form>
-                    <input 
-                        type="text" 
-                        value={friendId} 
-                        id="add" 
-                        onChange={(e)=>{setFriendId(e.target.value)}}
-                    />
-                    <input type="button" value="Add" onClick={AddFriend} />
-                </form>
-                { friendList }
+            <div className="center">
+                <div className="form-friends"> 
+                    <h1 className="center-text">Friends</h1>
+                    <div className="mb-10">
+                        <p className="center-text mb-10">{message}</p>
+                        {/* TÁ TORTÃO PRA DIREITA */}
+                        <form className="addFriend">
+                            <input 
+                                className="input-friend"
+                                type="text" 
+                                value={friendId} 
+                                id="add" 
+                                onChange={(e)=>{setFriendId(e.target.value)}}
+                            />
+                            {/* <input type="button" value="Add" onClick={AddFriend} /> */}
+                            <p className="button" onClick={AddFriend}>Add</p>
+                        </form>
+                    </div>
+                    <div className="scroll">
+                        { friendList }
+                    </div>
+                </div>
             </div>
-        </>
+        </div>
     )
 }
