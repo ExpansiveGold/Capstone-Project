@@ -85,23 +85,33 @@ router.route("/:id/change_password")
 router.route("/:id/delete_account")
     .delete(async (req, res) => {
         // get info send by user
-        const { password } = req.body
+        const password = req.body.password
         
         // Get user info
         var query = { _id: new ObjectId(req.params['id']) }
         var user = await UserColl.findOne(query)
         
         if (!user) return res.status(400).json({message: 'Error while deleting account'})
-
+            
         // check password
-        const validPass = bcrypt.compare(String(password), user.password)
-        if (!validPass) return res.status(400).json({message: 'Invalid password.'})
-
-        var userDel = await UserColl.findOneAndDelete(query)
-
-        if (!userDel) return res.status(500).json({ message: 'An unxpected error happend. Try again later.' })
-        
-        res.status(200).json(userDel)
+        bcrypt.compare(String(password), user.password, async (err, result) => {
+            if (err) {
+                console.log(err)
+                return
+            }
+            if (result) {
+                var userDel = await UserColl.findOneAndDelete(query)
+                
+                if (!userDel) return res.status(500).json({ message: 'An unxpected error happend. Try again later.' })
+                    
+                res.status(200).json(userDel)
+                // } else {
+                //     return res.status(400).json({message: 'Invalid username or password.'})
+                // }
+            } else {
+                return res.status(400).json({message: 'Invalid password.'})
+            }
+        })
     })
 
 export default router;

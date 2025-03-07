@@ -35,7 +35,11 @@ router.route("/")
 
             // Insert user in database
             const user = await UserColl.insertOne(NewUser);
-            res.status(200).json({ message: "User registered" })
+            // res.status(200).json({ 
+            //     user: user,
+            //     message: "User registered" 
+            // })
+            res.status(200).send(user)
         } catch (error) {
             console.error(error.message);
             res.status(500).json({ message: error.message })

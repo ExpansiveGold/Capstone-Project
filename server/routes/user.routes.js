@@ -82,9 +82,9 @@ router.route('/delete/:id')
     .delete(async (req, res) => {
         var query = { _id: new ObjectId(req.params['id']) }
         var user = await UserColl.findOneAndDelete(query)
-        if (!user) return res.status(500).json({ message: 'An unxpected error happend. Try again later.' })
+        if (user === null) return res.status(500).json({ message: 'An unxpected error happend. Try again later.' })
 
-        res.status(200).json({ 
+        return res.status(200).json({ 
             user: user, 
             message: 'User deleted'
         })
