@@ -114,7 +114,7 @@ export default function Profile() {
                         </div>
                         <Popup trigger={<p className="buttonDel formItem center-text">Delete account</p>} modal nested>
                             {close => (
-                                <div className="flexVertical">
+                                <div className="flexVertical popup">
                                     <div className="mb-10">
                                         <h1 className="center-text">Atention!</h1>
                                         <h3 className="center-text">This action is not reversable</h3>

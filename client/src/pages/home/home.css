@@ -89,6 +89,12 @@
   background: transparent;
 }
 
+.friendSec {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
 .friend {
     width: 100%;
     display: flex;

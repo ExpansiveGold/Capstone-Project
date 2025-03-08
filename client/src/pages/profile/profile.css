@@ -19,7 +19,7 @@
 .popup-content {
     /* height: 560px; */
     display: flex;
-    width: auto;
+    width: 400px;
     background-color: #302e2b;
     color: aliceblue;
     padding: 20px;

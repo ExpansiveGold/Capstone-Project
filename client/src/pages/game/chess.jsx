@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react";
-import { Chess } from "chess.js";
+import { useNavigate, useParams } from "react-router-dom";
 import { Chessboard } from "react-chessboard";
-import { useNavigate } from "react-router-dom";
+import { Chess } from "chess.js";
+import Nav from "../../components/navbar/navbar.jsx";
+import Panel from "../../components/movePanel/movePanel.jsx";
 import axios from "axios";
+import './game.css'
 
 export default function Game() {
     const [game, setGame] = useState(new Chess());
     const [position, setPosition] = useState(game.fen())
+    const [moveNum, setMoveNum] = useState(0)
+    const [players, setPlayers] = useState({})
+    const [rotation, setRotation] = useState('white')
+
+    const [moves, setMoves] = useState([])
     const [history, setHistory] = useState([{
         board: game.fen(),
         move: null
     }])
-    const navigate = useNavigate()
+    const { id } = useParams()
+    // const navigate = useNavigate()
     // const pgn = '1. e4 e5 2. Qh5 Nc6 3. Bc4 Nb4 4. Qxf7#'
 
     useEffect(() => {
@@ -67,15 +76,17 @@ export default function Game() {
     async function saveGame() {
         console.log('save')
         await axios.post('/match/play', {
-                white: '67bb75d432899ec57c77eebf',   
-                black: '67bb761132899ec57c77eec3',
+            white: 
+            '67ca3e67b9e09534c9f921fd',   
+            black: 
+            '67bb75f932899ec57c77eec1',
                 moves: history,
                 movesPgn: game.pgn(),
                 result: getWinner()
         })
         .then(function (res) {
             console.log(res)
-            navigate("/match/play")
+            // navigate("/match/play")
         })
     }
 
@@ -87,15 +98,38 @@ export default function Game() {
         }
     }
 
+    const Rotate = () => {
+        if (rotation == 'white'){
+            setRotation('black')
+        } else {
+            setRotation('white')
+        }
+    }
+
     return (
-        <div>
-            <Chessboard 
-                position={position} 
-                onPieceDrop={move} 
-                onPromotionCheck={promotionCheck} 
-                onPromotionPieceSelect={promotion}
-            />
-            <button onClick={()=>{navigate('/match/watch/$2b$10$iSZ2gWhsxpDFVOAr9ms30uxCM4w0rFohu4F2ziSG16QbvFxOrBbbW')}}>Watch</button>
+        <div className="play">
+            <Nav id={id}/>
+            <div className="main">
+                <div>
+                    <Chessboard 
+                        position={position} 
+                        onPieceDrop={move} 
+                        onPromotionCheck={promotionCheck} 
+                        onPromotionPieceSelect={promotion}
+                        boardWidth={680}
+                    />
+                </div>
+                <div className="form-control">
+                    {/* <p>{ movelist }</p> */}
+                    <Panel moves={moves} selected={moveNum} players={players} />
+                    <div className="controls">
+                        <p className="button center-text watchbtn" onClick={Rotate}>Rotate</p>
+                        {/* <p className="button center-text watchbtn" onClick={Undo}>Undo</p>
+                        <p className="button center-text watchbtn" onClick={Next}>Next</p> */}
+                    </div>
+                </div>
+            </div>
+            {/* <button onClick={()=>{navigate('/match/watch/$2b$10$iSZ2gWhsxpDFVOAr9ms30uxCM4w0rFohu4F2ziSG16QbvFxOrBbbW')}}>Watch</button> */}
         </div>
     )
 }

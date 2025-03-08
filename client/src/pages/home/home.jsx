@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Chessboard } from "react-chessboard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import './home.css'
 import Nav from "../../components/navbar/navbar.jsx";
 import axios from "axios";
@@ -8,6 +8,7 @@ import axios from "axios";
 export default function Home() {
     const [friends, setFriends] = useState([])
     const { id } = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         axios.get(`/profile/user/${id}/friends`)
@@ -30,6 +31,17 @@ export default function Home() {
             </div>
         )
     }
+    console.log(friendList)
+    const friend = () => {
+        navigate(`/profile/user/${id}/friends`)
+    }
+
+    const addFriends = [
+        <div className="friend">
+            <p>Start by adding some friends</p>
+            <p className="button" onClick={friend}>Add</p>
+        </div>
+    ]
 
     return(
         <div className="home">
@@ -42,11 +54,13 @@ export default function Home() {
                         arePiecesDraggable={false}
                         boardWidth={680}
                         customBoardStyle={{borderRadius: '3px', border: '1px'}}
-                        />
+                    />
                 </div>
-                <div className="form-home"> 
+                <div className="form-home friendSec"> 
+                    <h1 className="center-text mb-10">Friends</h1>
                     <div className="scroll">
-                        { friendList }
+                        {friendList.length === 0 ? addFriends : friendList }
+                        {/* { friendList } */}
                     </div>
                 </div>
             </div>

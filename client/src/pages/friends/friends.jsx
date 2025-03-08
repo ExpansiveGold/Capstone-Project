@@ -23,7 +23,7 @@ export default function Home() {
     // function AddFriend(friendId) {
     const AddFriend = () => {
         setMessage("")
-        axios.post(`/profile/user/${id}/friends/add/${friendId}`)
+        axios.post(`/user/${id}/friends/add/${friendId}`)
         .then((res) => {
             console.log(res, !res.data.message)
             if (!res.data.message) {
@@ -65,10 +65,9 @@ export default function Home() {
             <Nav id={id}/>
             <div className="center">
                 <div className="form-friends"> 
-                    <h1 className="center-text">Friends</h1>
+                    <h1 className="center-text" style={message === '' ? {marginBottom: '5.3%'} : {marginBottom: '2%'}}>Friends</h1>
                     <div className="mb-10">
                         <p className="center-text mb-10">{message}</p>
-                        {/* TÁ TORTÃO PRA DIREITA */}
                         <form className="addFriend">
                             <input 
                                 className="input-friend"
@@ -76,6 +75,7 @@ export default function Home() {
                                 value={friendId} 
                                 id="add" 
                                 onChange={(e)=>{setFriendId(e.target.value)}}
+                                placeholder="Type your friends email address"
                             />
                             {/* <input type="button" value="Add" onClick={AddFriend} /> */}
                             <p className="button" onClick={AddFriend}>Add</p>

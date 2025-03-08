@@ -14,9 +14,13 @@
     border-radius: 15px;
 }
 
+.popup {
+    width: 100%;
+}
+
 .permissions {
     display: flex;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     margin-bottom: 20px;
     /* white-space: nowrap; */
 }

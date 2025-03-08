@@ -60,25 +60,31 @@ export default function Admin(){
                 <p>{users[i].email}</p>
                 <Popup trigger={<p className="button">Edit</p>} modal nested>
                     {close => (
-                        <div className="">
-                            <h1 className='title' style={message === '' ? {marginBottom: '5%'} : {marginBottom: '2%'}}>Permissions</h1>
-                            <p>{ message }</p>
+                        <div className="popup">
+                            <h1 className='center-text mb-10' style={message === '' ? {marginBottom: '7.5%'} : {marginBottom: '2%'}}>Permissions</h1>
+                            <p className="center-text mb-10">{ message }</p>
                             <div className="permissions">
                                 <p className="perBtn hv-text-center">Change admin permissions</p>
                                 <p className="buttonDel perBtn center-text" onClick={() => {admin(users[i]._id, users[i].isAdmin)}}>{users[i].isAdmin ? 'Revoke' : 'Give'}</p>
                             </div>
                             <div className="permissions">
-                                <p className="perBtn">Change account status</p>
+                                <p className="perBtn hv-text-center">Change account status</p>
                                 <p className="buttonDel perBtn center-text" onClick={() => {ban(users[i]._id, users[i].isBanned)}}>{users[i].isBanned ? 'Unban' : 'Ban'}</p>
                             </div>
                             <div className="buttons">
-                                <Popup trigger={<p className="buttonDel perBtn center-text">Delete Account</p>} modal nested>
-                                    <h5>Atention!</h5>
-                                    <p>This action is not reversable. Are you sure you want to procede?</p>
-                                    <p className="buttonDel center-text" onClick={() => {delAccount(users[i]._id);close()}}>Delete account</p>
-                                    <p className="buttonForm center-text" onClick={close}>Cancel</p>
-                                </Popup>
                                 <p className="buttonForm perBtn center-text" onClick={close}>Cancel</p>
+                                <Popup trigger={<p className="buttonDel perBtn center-text">Delete Account</p>} modal nested>
+                                    {close2 => (
+                                        <div>
+                                            <h1 className="center-text mb-10 title">Atention!</h1>
+                                            <p className="center-text mb-10">This action is not reversable. Are you sure you want to procede?</p>
+                                            <div className="buttons">
+                                                <p className="buttonForm perBtn center-text" onClick={close2}>Cancel</p>
+                                                <p className="buttonDel perBtn center-text" onClick={() => {delAccount(users[i]._id);close()}}>Delete account</p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </Popup>
                             </div>
                         </div>
                     )}
@@ -93,8 +99,8 @@ export default function Admin(){
             <Nav id={id} />
             <div className="center">
                 <div className="form-users">
-                    <h1 className="mb-10 center-text">Users</h1>
-                    <p>{ message }</p>
+                    <h1 className="center-text" style={message === '' ? {marginBottom: '5.3%'} : {marginBottom: '2%'}}>Users</h1>
+                    <p className="mb-10 center-text">{ message }</p>
                     <div className="scroll">
                         { userList }
                     </div>

@@ -21,8 +21,10 @@ export default function App() {
                 </Route> */}
                     <Route index path='login' element={<Login />} />
                     <Route path='create_account' element={<CreateAccount />} />
-                    <Route path='match/play' element={<Chess />} />
+                    <Route path='user/:id/match/play' element={<Chess />} />
+                    {/* <Route path='match/play' element={<Chess />} /> */}
                     <Route path='user/:id/match/watch/:hash' element={<Watch />} />
+                    {/* <Route path='match/watch/:hash' element={<Watch />} /> */}
                     <Route path='home/user/:id' element={<Home />} />
                     <Route path='historic_matches/user/:id' element={<Building />} />
                     <Route path='puzzles/user/:id' element={<Building />} />
