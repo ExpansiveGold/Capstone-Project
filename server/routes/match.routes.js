@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 const router = express.Router()
 
 const MatchesColl = db().collection("Matches")
+const FullColl = db().collection('fullMatch')
 
 // +-------------+
 // | Match Route |
@@ -101,7 +102,7 @@ router.route("/play") // /match/play
 router.route("/watch/:hash") // /match/watch/:id
     .get(async (req, res) => {
         var query = { hash: req.params['hash'] }
-        var match = await MatchesColl.findOne(query, (err, res) => {
+        var match = await FullColl.findOne(query, (err, res) => {
             if (err) throw err;
             console.log(res)
             db.close()

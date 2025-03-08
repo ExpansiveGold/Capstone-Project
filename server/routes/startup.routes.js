@@ -19,10 +19,10 @@ function startup(app){
     app.use('/login', login)
     app.use('/create_account', create_account);
     
-    app.use('/match', match)
     app.use('/historic_matches', HistoricMatches)
     app.use('/puzzles', Puzzles)
-
+    
+    app.use('/user/:id/match', match)
     app.use('/profile/user', profile) // /user/:id
     app.use('/profile/user', friends) // /user/:id/friends
     app.use('/profile/user', history) // /user/:id/history
