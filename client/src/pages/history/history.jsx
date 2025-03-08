@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Nav from "../../components/navbar/navbar.jsx";
 import axios from "axios";
+import './history.css'
 
 export default function History() {
     const [history, setHistory] = useState({})
@@ -23,38 +24,53 @@ export default function History() {
     const games = []
     for (let i = 0; i < history.length; i++ ) {
 
-         var white = (
-            <form key={history[i]._id}>
-                <p>{history[i].whitePlayer}</p>
-                <p>Vs.</p>
-                <p>{history[i].blackPlayer}</p>
-                <input type="button" value="Watch" onClick={() => watch(history[i].hash)} />
-            </form>
-        )
-
-        var black = (
-            <form key={history[i]._id}>
-                <div>
-                    <p>{history[i].blackPlayer}</p>
-                    <p>Vs.</p>
-                    <p>{history[i].whitePlayer}</p>
-                </div>
-                <input type="button" value="Watch" onClick={() => watch(history[i].hash)} />
-            </form>
-        )
-
         if (id == history[i].white) {
-            games.push(white)
+            games.push(
+                <form className="match-list" key={history[i]._id}>
+                    <div className="player">
+                        <div className="white-block"></div>
+                        <p>{history[i].whitePlayer}</p>
+                    </div>
+                    <p>Vs.</p>
+                    <div className="player">
+                        <div className="black-block"></div>
+                        <p>{history[i].blackPlayer}</p>
+                    </div>
+                    {/* <input type="button" value="Watch" onClick={() => watch(history[i].hash)} /> */}
+                    <p className="button" onClick={() => watch(history[i].hash)}>Watch</p>
+                </form>
+            )
         } else {
-            games.push(black)
+            games.push(
+                <form className="match-list" key={history[i]._id}>
+                    <div className="player">
+                        <div className="black-block"></div>
+                        <p>{history[i].blackPlayer}</p>
+                    </div>
+                    <p>Vs.</p>
+                    <div className="player">
+                        <div className="white-block"></div>
+                        <p>{history[i].whitePlayer}</p>
+                    </div>
+                    {/* <input type="button" value="Watch" onClick={() => watch(history[i].hash)} /> */}
+                    <p className="button" onClick={() => watch(history[i].hash)}>Watch</p>
+                </form>
+            )
         }
     }
 
     return(
-        <>
-            <h1>History</h1>
+        <div className="history">
+            {/* <h1>History</h1> */}
             <Nav id={id} />
-            {games}
-        </>
+            <div className="center">
+                <div className="form-history">
+                    <h1 className="center-text mb-10">Match History</h1>
+                    <div className="scroll">
+                        {games}
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }

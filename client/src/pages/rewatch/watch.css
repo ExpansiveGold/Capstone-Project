@@ -1,0 +1,59 @@
+.watch {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.form-control {
+    height: 680px;
+    width: 340px;
+    /* display: flex; */
+    margin-left: 20px;
+    padding: 25px 20px 25px 25px;
+    background-color: #262522;
+    border-radius: 15px;
+    /* overflow: hidden; */
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-around;
+}
+
+.watchbtn {
+    background-color: #666;
+    width: 30%;
+}
+
+.black-block {
+    height: 15px;
+    width: 15px;
+    margin-right: 0px;
+    background-color: black;
+    border-radius: 3px;
+}
+
+.white-block {
+    height: 15px;
+    width: 15px;
+    margin-right: 0px;
+    background-color: aliceblue;
+    border-radius: 3px;
+}
+
+.name {
+    /* height: ; */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 5px 0px;
+}
+
+.line {
+    height: 5px;
+    border: #66666677;
+}

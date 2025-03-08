@@ -1,0 +1,49 @@
+.selected {
+    display: inline-block;
+    background: #222;
+    border-bottom: 2px solid #777;
+    border-radius: 3px;
+    padding: 0 3px;
+}
+
+.row {
+    height: 30px;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    /* background-color: #333; */
+}
+
+.row-item {
+    width: 25%;
+}
+
+.pr-5 {
+    padding-right: 5px;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.even {
+    background-color: #66666677;
+}
+
+.odd {
+    background-color: #33333377;
+}
+
+.moves-top {
+    border-radius: 5px 5px 0 0;
+}
+
+.moves-bottom {
+    border-radius: 0 0 5px 5px;
+}
+
+.names {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
