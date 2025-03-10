@@ -41,7 +41,7 @@ router.route("/:id/friends")
                 // return res.send(user)
                 friends = [...friends, user]
             }
-            console.log(friends)
+            // console.log(friends)
         }
 
         // res.status(200).send(friend)

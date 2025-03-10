@@ -5,8 +5,8 @@
 }
 
 .form-profile {
+    height: 580px;
     width: 680px;
-    height: 680px;
     display: flex;
     justify-content: space-around;
     flex-direction: column;

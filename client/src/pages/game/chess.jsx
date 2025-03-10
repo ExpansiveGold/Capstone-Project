@@ -99,7 +99,7 @@ export default function Game() {
     }
 
     const Rotate = () => {
-        if (rotation == 'white'){
+        if (rotation === 'white'){
             setRotation('black')
         } else {
             setRotation('white')
@@ -116,7 +116,7 @@ export default function Game() {
                         onPieceDrop={move} 
                         onPromotionCheck={promotionCheck} 
                         onPromotionPieceSelect={promotion}
-                        boardWidth={680}
+                        boardWidth={580}
                     />
                 </div>
                 <div className="form-control">

@@ -66,7 +66,7 @@ export default function Watch() {
     }
 
     const Rotate = () => {
-        if (rotation == 'white'){
+        if (rotation === 'white'){
             setRotation('black')
         } else {
             setRotation('white')
@@ -83,7 +83,7 @@ export default function Watch() {
                         position={position}
                         arePiecesDraggable={false}
                         boardOrientation={rotation}
-                        boardWidth={680}
+                        boardWidth={580}
                     />
                 </div>
                 <div className="form-control">
