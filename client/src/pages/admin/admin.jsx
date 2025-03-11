@@ -1,20 +1,37 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Navigate } from "react-router-dom";
 import Nav from "../../components/navbar/navbar.jsx"
+import { AuthContext } from "../../components/AuthContext.js";
 import Popup from 'reactjs-popup';
 import axios from "axios";
 import './admin.css'
 
 export default function Admin(){
+    const [user, setUser] = useState({})
     const [users, setUsers] = useState([])
     const [message, setMessage] = useState('')
-    const { id } = useParams()
+    const { token, loading } = useContext(AuthContext);
     
     useEffect(() => {
-        axios.get('/admin/users')
-        .then((res) => {
-            setUsers(res.data.sort((a, b) => a.username.localeCompare(b.username)))
-        })
+        if (loading === true) {
+            // return null;
+            return;
+        } else if (token === null) {
+            return <Navigate to="/login" replace />;
+            // navigate('/login')
+        } else {
+            axios.post(`/auth/user`, {
+                token: token
+            })
+            .then((res) => {
+                setUser(res.data)
+                console.log(res)
+            })
+            axios.get('/admin/users')
+            .then((res) => {
+                setUsers(res.data.sort((a, b) => a.username.localeCompare(b.username)))
+            })
+        }
     }, [message])
 
     const delAccount = (id) => {
@@ -53,7 +70,7 @@ export default function Admin(){
 
     const userList = []
     for (let i = 0; i < users.length; i++) {
-        if (users[i]._id == id) continue
+        if (users[i]._id == user.id) continue
         userList.push(   
             <div className="user-list" key={users[i]._id}>
                 <p>{users[i].username}</p>
@@ -96,7 +113,7 @@ export default function Admin(){
     return(
         <div className="admin">
             {/* <h1>Admin</h1> */}
-            <Nav id={id} />
+            <Nav />
             <div className="center">
                 <div className="form-users">
                     <h1 className="center-text" style={message === '' ? {marginBottom: '5.3%'} : {marginBottom: '2%'}}>Users</h1>

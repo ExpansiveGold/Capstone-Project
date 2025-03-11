@@ -10,9 +10,11 @@ import history from './history.routes.js'
 import users from './user.routes.js'
 import adminHistoricMatches from './admin_historic_matches.js'
 import adminPuzzles from './admin_puzzles.js'
+import { config } from 'dotenv';
 
 function startup(app){
     app.use(express.json());
+    config()
 
     app.use('/login', login)
     app.use('/create_account', create_account);
@@ -20,10 +22,10 @@ function startup(app){
     app.use('/historic_matches', HistoricMatches)
     app.use('/puzzles', Puzzles)
     
-    app.use('/user/:id/match', match)
-    app.use('/profile/user', profile) // /user/:id
-    app.use('/profile/user', friends) // /user/:id/friends
-    app.use('/profile/user', history) // /user/:id/history
+    app.use('/auth/user', match)
+    app.use('/auth/user', profile) // /user/:id
+    app.use('/auth/user', friends) // /user/:id/friends
+    app.use('/auth/user', history) // /user/:id/history
 
     app.use('/admin/users', users);
     app.use('/admin/historic_matches', adminHistoricMatches)

@@ -1,21 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Chessboard } from "react-chessboard";
-import { useNavigate, useParams } from "react-router-dom";
-import './home.css'
+import { useNavigate, Navigate } from "react-router-dom";
+import { AuthContext } from "../../components/AuthContext.js";
+// import jwt from 'jsonwebtoken'
 import Nav from "../../components/navbar/navbar.jsx";
 import axios from "axios";
+import './home.css'
+// import { verifyToken } from "../../../../server/utils/jwtHelper.js";
 
 export default function Home() {
+    // const [user, setUser] = useState({})
     const [friends, setFriends] = useState([])
-    const { id } = useParams()
     const navigate = useNavigate()
-
+    const { token, loading } = useContext(AuthContext);
+    
     useEffect(() => {
-        axios.get(`/profile/user/${id}/friends`)
-        .then((res) => {
-            setFriends(res.data)
-            console.log(res)
-        })
+        if (loading === true) {
+            // return null;
+            return;
+        } else if (token === null) {
+            return <Navigate to="/login" replace />;
+            // navigate('/login')
+        } else {
+            axios.post(`/auth/user/friends`, {
+                token: token
+            })
+            .then((res) => {
+                setFriends(res.data.friends)
+                console.log(res)
+            })
+        }
     }, [])
 
     const invite = () => {
@@ -33,7 +47,7 @@ export default function Home() {
     }
     console.log(friendList)
     const friend = () => {
-        navigate(`/profile/user/${id}/friends`)
+        navigate(`/auth/user/friends`)
     }
 
     const addFriends = [
@@ -46,13 +60,13 @@ export default function Home() {
     return(
         <div className="home">
             {/* <h1>Home</h1> */}
-            <Nav id={id}/>
+            <Nav />
             <div className="main">
                 <div>
                     <Chessboard 
                         position={'start'}
                         arePiecesDraggable={false}
-                        boardWidth={680}
+                        boardWidth={580}
                         customBoardStyle={{borderRadius: '3px', border: '1px'}}
                     />
                 </div>

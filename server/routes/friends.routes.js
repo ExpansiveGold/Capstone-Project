@@ -2,6 +2,7 @@ import express from 'express';
 import db from '../server.js'
 import Friends from '../models/friends.model.js';
 import { ObjectId } from 'mongodb';
+import { verifyToken } from '../utils/jwtHelper.js';
 
 const router = express.Router()
 const FriendColl = db().collection("Friends")
@@ -11,12 +12,14 @@ const UserColl = db().collection("Users")
 // | User Friends Route |
 // +--------------------+
 
-//TODO: Integrate with database
 // /user/:id/friends
-router.route("/:id/friends")
-    .get(async (req, res) => {
-        const id = req.params['id']
-        var query = { $or: [{ userId: id }, { friendId: id }]}
+router.route("/friends")
+    // get, using post because of axios limitations
+    .post(async (req, res) => {
+        const token = req.body.token
+        const verified = verifyToken(token)
+        console.log(verified)
+        var query = { $or: [{ userId: verified.id }, { friendId: verified.id }]}
         var friends = []
 
         //Fetch data from database
@@ -30,12 +33,12 @@ router.route("/:id/friends")
         // Fetch user data
         for (let friendData of friend) {
             if (friendData == null) continue
-            if (friendData.userId == id) {
+            if (friendData.userId == verified.id) {
                 var user = await UserColl.findOne({ _id: new ObjectId(`${friendData.friendId}`) })
                 if (user == null) continue
                 // return res.send(user)
                 friends = [...friends, user]
-            } else if (friendData.friendId == id) {
+            } else if (friendData.friendId == verified.id) {
                 var user = await UserColl.findOne({ _id: new ObjectId(`${friendData.userId}`) })
                 if (user == null) continue
                 // return res.send(user)
@@ -45,12 +48,16 @@ router.route("/:id/friends")
         }
 
         // res.status(200).send(friend)
-        res.status(200).send(friends)
+        res.status(200).send({
+            user: verified,
+            friends: friends
+        })
     })
 
-router.route("/:id/friends/add/:friendId")
+router.route("/friends/add/:friendId")
     .post(async (req, res) => {
-        const id = req.params['id']
+        const token = req.body.token
+        const verified = verifyToken(token)
         const friendId = req.params['friendId']
 
         var query = { email: friendId }
@@ -60,20 +67,20 @@ router.route("/:id/friends/add/:friendId")
         if (user == null) {
             res.status(500).json({ message: 'User not found' })
         } else {   
-            if (id == user._id) {
+            if (verified.id == user._id) {
                 res.status(500).json({ message: 'You cannot add yourself as friend' })
             } else {
                 var friendQuery = { 
                     $or: [
                         { 
-                            userId: id, 
+                            userId: verified.id, 
                             friendId: `${user._id}`
                             // friendId: friendId
                         },
                         { 
                             // userId: friendId, 
                             userId: `${user._id}`, 
-                            friendId: id 
+                            friendId: verified.id 
                         } 
                     ]
                 }
@@ -82,7 +89,7 @@ router.route("/:id/friends/add/:friendId")
                 if (check === null) {
                         // add friend
                     var newFriend = new Friends({
-                        userId: id,
+                        userId: verified.id,
                         friendId: `${user._id}`
                         // friendId: friendId
                     })
@@ -95,23 +102,25 @@ router.route("/:id/friends/add/:friendId")
         }
     })
 
-router.route("/:id/friends/remove/:friendId")
-    .delete(async (req, res) => {
-        const id = req.params['id']
+router.route("/friends/remove/:friendId")
+    // delete, using post because of axios limitations
+    .post(async (req, res) => {
+        const token = req.body.token
+        const verified = verifyToken(token)
         const friendId = req.params['friendId']
 
-        if (id == friendId) {
+        if (verified.id == friendId) {
             res.status(500).json({ message: 'You cannot remove yourself as friend' })
         } else {
             var query = { 
                 $or: [
                     { 
-                        userId: id, 
+                        userId: verified.id, 
                         friendId: friendId
                     },
                     { 
                         userId: friendId, 
-                        friendId: id 
+                        friendId: verified.id 
                     } 
                 ]
             }

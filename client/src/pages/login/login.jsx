@@ -1,14 +1,23 @@
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import './login.css'
+import { AuthContext } from '../../components/AuthContext';
 import axios from "axios";
+import './login.css'
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
 
+    const { token, setToken } = useContext(AuthContext)
+
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (token !== null) {
+            navigate('/home')
+        }
+    }, [])
 
     const login = async () => {
         await axios.post('/login', {
@@ -16,17 +25,17 @@ export default function Login() {
             password: password
         })
         .then((res) => {
-            if (res.data.isBanned) {
-                setMessage('This user is banned')
-                return
-            }
-            console.log(res, !res.data.message)
-            if (!res.data.message) {
-                navigate(`/home/user/${res.data._id}`)        
+            if (res.data.message === 'success') {
+                setToken(res.data.token)
+                localStorage.setItem('token', res.data.token)
+                // navigate(`/home/user/${user._id}`)        
+                navigate(`/home`)        
             } 
         })
         .catch((res) => {
-            console.log(res.response.data.message)
+            console.log('Auth failed: ',res)
+            setToken(null)
+            localStorage.removeItem('token')
             setMessage(res.response.data.message)
         })
     }

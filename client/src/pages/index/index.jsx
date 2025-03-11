@@ -1,14 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 export default function Index() {
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        navigate('/login')
-    }, [])
-
     return (
-        <></>
+        <Navigate to='/login' replace/>
     )
 }

@@ -1,9 +1,10 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import { useNavigate, Navigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../components/AuthContext.js";
 import Nav from "../../components/navbar/navbar.jsx";
+import Popup from 'reactjs-popup';
 import axios from "axios";
+import 'reactjs-popup/dist/index.css';
 import './profile.css'
 
 export default function Profile() {
@@ -14,19 +15,32 @@ export default function Profile() {
     const [message, setMessage] = useState('')
     const [delMsg, setDelMsg] = useState('')
     const navigate = useNavigate()
-    const { id } = useParams()
+    const { token, setToken, loading } = useContext(AuthContext);
 
     useEffect(() => {
-        axios.get(`/profile/user/${id}`)
-        .then((res) => {
-            setUser(res.data)
-            console.log(res)
-        })
+        if (loading) {
+            // return null;
+            return;
+        }
+
+        if (!token) {
+            return <Navigate to="/login" replace />;
+            // navigate('/login')
+        } else {
+            axios.post(`/auth/user`, {
+                token: token
+            })
+            .then((res) => {
+                setUser(res.data)
+                console.log(res)
+            })
+        }
     }, []) 
 
     const changePass = () => {
         setMessage('')
-        axios.post(`/profile/user/${id}/change_password`, {
+        axios.post(`/auth/user/change_password`, {
+            token: token,
             password: password,
             newPassword: newPassword
         })
@@ -45,7 +59,8 @@ export default function Profile() {
 
     const delAccount = () => {
         setDelMsg('')
-        axios.delete(`/profile/user/${id}/delete_account`, {
+        axios.delete(`/auth/user/delete_account`, {
+            token: token,
             password: passwordCheck
         })
         .then((res) => {
@@ -61,10 +76,18 @@ export default function Profile() {
         })
     }
 
+    const logout = () => {
+        console.log(token, localStorage.getItem('token'))
+        setToken(null)
+        localStorage.removeItem('token')
+        console.log(token, localStorage.getItem('token'))
+        navigate('/login')
+    }
+
     return(
         <div className="profile">
             {/* <h1>Profile</h1> */}
-            <Nav id={id} />
+            <Nav />
             <div className="center">
                 <div className="form-profile">
                     <div className="align">
@@ -141,7 +164,7 @@ export default function Profile() {
                     <hr />
                     <div className="align">
                         <h2 className="center-text formItem">Log out</h2>
-                        <p className="buttonDel center-text formItem" onClick={()=> navigate('/login')}>Log out</p>
+                        <p className="buttonDel center-text formItem" onClick={logout}>Log out</p>
                     </div>
                 </div>
             </div>

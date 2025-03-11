@@ -1,13 +1,25 @@
+import { useEffect, useContext } from "react"
+import { Navigate } from "react-router-dom"
+import { AuthContext } from "../../components/AuthContext.js"
 import Nav from "../../components/navbar/navbar.jsx"
-import { useParams } from "react-router-dom";
 import './building.css'
 
 export default function Building(){
-    const { id } = useParams()
+    const { token, loading } = useContext(AuthContext)
+
+    useEffect(() => {
+        if (loading === true) {
+            // return null;
+            return;
+        } else if (token === null) {
+            return <Navigate to="/login" replace />;
+            // navigate('/login')
+        }
+    }, [])
     
     return(
         <div className="building">
-            <Nav id={id} />
+            <Nav />
             <div className="center">
                 <div className="form-building">
                     <h1>Under construction</h1>

@@ -1,8 +1,8 @@
 import express from 'express';
 import db from '../server.js'
 import { ObjectId } from 'mongodb';
-// import mongo from 'mongodb';
 import bcrypt from 'bcrypt';
+import { verifyToken } from '../utils/jwtHelper.js';
 
 const router = express.Router()
 const UserColl = db().collection("Users")
@@ -13,10 +13,11 @@ const UserColl = db().collection("Users")
 
 //TODO: Integrate with database
 // /user/:id
-router.route("/:id")
-    .get(async (req, res) => {
-        // var query = { _id: req.params['id'] }
-        var query = { _id: new ObjectId(req.params['id']) }
+router.route("/")
+    .post(async (req, res) => {
+        const token = req.body.token
+        const verified = verifyToken(token)
+        var query = { _id: new ObjectId(`${verified.id}`) }
         var user = await UserColl.findOne(query)
         if (user === null) {
             res.status(500).json({message: 'Error finding user'})
@@ -25,13 +26,15 @@ router.route("/:id")
         }
     })
 
-router.route("/:id/change_password")
+router.route("/change_password")
     .post(async (req, res) => {
         // get info send by user
         const info = req.body
+        const token = req.body.token
+        const verified = verifyToken(token)
         
         // Get user info
-        var query = { _id: new ObjectId(req.params['id']) }
+        var query = { _id: new ObjectId(`${verified.id}`) }
         var user = await UserColl.findOne(query)
         
         if (user === null) {
@@ -82,13 +85,15 @@ router.route("/:id/change_password")
         // res.send('Password changed')
     })
 
-router.route("/:id/delete_account")
+router.route("/delete_account")
     .delete(async (req, res) => {
         // get info send by user
         const password = req.body.password
+        const token = req.body.token
+        const verified = verifyToken(token)
         
         // Get user info
-        var query = { _id: new ObjectId(req.params['id']) }
+        var query = { _id: new ObjectId(`${verified.id}`) }
         var user = await UserColl.findOne(query)
         
         if (!user) return res.status(400).json({message: 'Error while deleting account'})

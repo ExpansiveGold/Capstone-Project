@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { AuthContext } from "../../components/AuthContext.js";
 import Nav from "../../components/navbar/navbar.jsx";
 import axios from "axios";
 import './friends.css'
@@ -8,22 +9,34 @@ export default function Home() {
     const [friends, setFriends] = useState([])
     const [friendId, setFriendId] = useState("")
     const [message, setMessage] = useState("");
-    const { id } = useParams()
+    const { token, loading } = useContext(AuthContext);
 
     useEffect(() => {
-        axios.get(`/profile/user/${id}/friends`)
-        .then((res) => {
-            // sort friend list before storing
-            setFriends(res.data.sort((a, b) => a.username.localeCompare(b.username)));
-            console.log(res, friends)
-        })
+        if (loading === true) {
+            // return null;
+            return;
+        } else if (token === null) {
+            return <Navigate to="/login" replace />;
+            // navigate('/login')
+        } else {
+            axios.post(`/auth/user/friends`, {
+                token: token
+            })
+            .then((res) => {
+                // sort friend list before storing
+                setFriends(res.data.friends.sort((a, b) => a.username.localeCompare(b.username)));
+                console.log(res, friends)
+            })
+        }
 
     }, [message])
 
     // function AddFriend(friendId) {
     const AddFriend = () => {
         setMessage("")
-        axios.post(`/user/${id}/friends/add/${friendId}`)
+        axios.post(`/auth/user/friends/add/${friendId}`, {
+            token: token
+        })
         .then((res) => {
             console.log(res, !res.data.message)
             if (!res.data.message) {
@@ -40,7 +53,9 @@ export default function Home() {
     // function RemoveFriend(friend) {
     const RemoveFriend = (friend) => {
         setMessage("")
-        axios.delete(`/profile/user/${id}/friends/remove/${friend}`)
+        axios.post(`/auth/user/friends/remove/${friend}`, {
+            token: token
+        })
         .then((res) => {
             console.log(res, !res.data.message)
             if (!res.data.message) {
@@ -62,7 +77,7 @@ export default function Home() {
     return(
         <div className="friends">
             {/* <h1>Friends</h1> */}
-            <Nav id={id}/>
+            <Nav />
             <div className="center">
                 <div className="form-friends"> 
                     <h1 className="center-text" style={message === '' ? {marginBottom: '5.3%'} : {marginBottom: '2%'}}>Friends</h1>

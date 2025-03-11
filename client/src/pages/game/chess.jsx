@@ -117,6 +117,7 @@ export default function Game() {
                         onPromotionCheck={promotionCheck} 
                         onPromotionPieceSelect={promotion}
                         boardWidth={580}
+                        customBoardStyle={{borderRadius: '3px', border: '1px'}}
                     />
                 </div>
                 <div className="form-control">

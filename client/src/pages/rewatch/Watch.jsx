@@ -17,7 +17,7 @@ export default function Watch() {
     const [rotation, setRotation] = useState('white')
     // const [movelist, setMoveList] = useState([])
     const [moves, setMoves] = useState([])
-    const { id, hash } = useParams()
+    const { hash } = useParams()
     const isMount = useIsMount();
     var movelist = []
 
@@ -27,7 +27,7 @@ export default function Watch() {
     console.log(movelist)
 
     useEffect(() => {
-        axios.get(`/user/${id}/match/watch/${hash}`)
+        axios.get(`/auth/user/watch/${hash}`)
         .then(function (response) {
             // handle success
             const move = response.data.moves
@@ -76,7 +76,7 @@ export default function Watch() {
     return (
         <div className="watch">
             {/* <h1>Watch</h1> */}
-            <Nav id={id}/>
+            <Nav />
             <div className="main">
                 <div>
                     <Chessboard 
@@ -84,6 +84,7 @@ export default function Watch() {
                         arePiecesDraggable={false}
                         boardOrientation={rotation}
                         boardWidth={580}
+                        customBoardStyle={{borderRadius: '3px', border: '1px'}}
                     />
                 </div>
                 <div className="form-control">

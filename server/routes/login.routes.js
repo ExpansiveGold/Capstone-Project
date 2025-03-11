@@ -1,4 +1,6 @@
 import express from 'express';
+// import jwt from 'jsonwebtoken'
+import { generateToken } from '../utils/jwtHelper.js'
 import db from '../server.js';
 import bcrypt from 'bcrypt';
 
@@ -16,8 +18,10 @@ router.route("/")
         var query = { email: email }
         var user = await UserColl.findOne(query)
 
-        // User found
+        // User not found
         if (!user) return res.status(400).json({message: 'Invalid username or password.'})
+
+        if (user.isBanned) return res.status(400).json({message: 'This user is banned'})
         
         // check password
         bcrypt.compare(String(password), user.password, (err, result) => {
@@ -26,7 +30,10 @@ router.route("/")
                 return
             }
             if (result) {
-                return res.status(200).send(user)
+                // console.log(process.env.SECRET_KEY, 'test')
+                const token = generateToken(user)
+                return res.status(200).send({ token: token, message: 'success'})
+                // return res.status(200).send(user)
             } else {
                 return res.status(400).json({message: 'Invalid username or password.'})
             }

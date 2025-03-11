@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import './navbar.css'
+import { AuthContext } from "../AuthContext";
 import axios from "axios";
+import './navbar.css'
 
-export default function Nav(props) {
+export default function Nav() {
     const [isAdmin, setIsAdmin] = useState(false)
+    const { token } = useContext(AuthContext);
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get(`/profile/user/${props.id}`)
+        axios.post(`/auth/user`, {
+            token: token
+        })
         .then((res) => {
             setIsAdmin(res.data.isAdmin)
             console.log(res)
@@ -21,13 +25,13 @@ export default function Nav(props) {
     return(
         <nav>
             <ul>
-                <li><NavLink to={`/home/user/${props.id}`}>Home</NavLink></li>
-                <li><NavLink to={`/historic_matches/user/${props.id}`}>Historic Matches</NavLink></li>
-                <li><NavLink to={`/puzzles/user/${props.id}`}>Puzzles</NavLink></li>
-                <li><NavLink to={`/profile/user/${props.id}/friends`}>Friends</NavLink></li>
-                <li><NavLink to={`/profile/user/${props.id}/history`}>Match History</NavLink></li>
-                <li><NavLink to={`/profile/user/${props.id}/`}>Profile</NavLink></li>
-                {isAdmin ? <li><NavLink to={`/admin/user/${props.id}/`}>Admin</NavLink></li> : ''}
+                <li><NavLink to={`/home`}>Home</NavLink></li>
+                <li><NavLink to={`/historic_matches`}>Historic Matches</NavLink></li>
+                <li><NavLink to={`/puzzles`}>Puzzles</NavLink></li>
+                <li><NavLink to={`/auth/user/friends`}>Friends</NavLink></li>
+                <li><NavLink to={`/auth/user/history`}>Match History</NavLink></li>
+                <li><NavLink to={`/auth/user/`}>Profile</NavLink></li>
+                {isAdmin ? <li><NavLink to={`/admin`}>Admin</NavLink></li> : ''}
             </ul>
         </nav>
     )

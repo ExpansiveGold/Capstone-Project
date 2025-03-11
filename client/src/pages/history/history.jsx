@@ -1,30 +1,43 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import Nav from "../../components/navbar/navbar.jsx";
+import { AuthContext } from "../../components/AuthContext.js";
 import axios from "axios";
 import './history.css'
 
 export default function History() {
+    const [user, setUser] = useState({})
     const [history, setHistory] = useState({})
     const navigate = useNavigate()
-    const { id } = useParams()
+    const { token, loading } = useContext(AuthContext);
 
     useEffect(() => {
-        axios.get(`/profile/user/${id}/history`)
-        .then((res) => {
-            setHistory(res.data)
-            console.log(res)
-        })
+        if (loading === true) {
+            // return null;
+            return;
+        } else if (token === null) {
+            return <Navigate to="/login" replace />;
+            // navigate('/login')
+        } else {
+            axios.post(`/auth/user/history`, {
+                token: token
+            })
+            .then((res) => {
+                setUser(res.data.user)
+                setHistory(res.data.matches)
+                console.log(res)
+            })
+        }
     }, []) 
 
     const watch = (matchHash) => {
-        navigate(`/user/${id}/match/watch/${matchHash}`)
+        navigate(`/user/watch/${matchHash}`)
     }
 
     const games = []
     for (let i = 0; i < history.length; i++ ) {
 
-        if (id == history[i].white) {
+        if (user.id == history[i].white) {
             games.push(
                 <form className="match-list" key={history[i]._id}>
                     <div className="player">
@@ -62,7 +75,7 @@ export default function History() {
     return(
         <div className="history">
             {/* <h1>History</h1> */}
-            <Nav id={id} />
+            <Nav />
             <div className="center">
                 <div className="form-history">
                     <h1 className="center-text mb-10">Match History</h1>
