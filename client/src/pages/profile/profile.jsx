@@ -17,16 +17,20 @@ export default function Profile() {
     const navigate = useNavigate()
     const { token, setToken, loading } = useContext(AuthContext);
 
-    useEffect(() => {
-        if (loading) {
+    const checkToken = () => {
+        if (loading === true) {
             // return null;
-            return;
-        }
-
-        if (!token) {
-            return <Navigate to="/login" replace />;
-            // navigate('/login')
+            return false;
+        } else if (token === null) {
+            // return <Navigate to="/login" replace />;
+            navigate('/login')
         } else {
+            return true
+        }
+    }
+
+    useEffect(() => {
+        if (checkToken()) {
             axios.post(`/auth/user`, {
                 token: token
             })
@@ -82,6 +86,7 @@ export default function Profile() {
         localStorage.removeItem('token')
         console.log(token, localStorage.getItem('token'))
         navigate('/login')
+        // return <Navigate to="/login" replace />;
     }
 
     return(

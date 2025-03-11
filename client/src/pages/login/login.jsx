@@ -13,11 +13,14 @@ export default function Login() {
 
     const navigate = useNavigate()
 
+    
     useEffect(() => {
+        console.log(token)
         if (token !== null) {
+        // if (!token) {
             navigate('/home')
         }
-    }, [])
+    })
 
     const login = async () => {
         await axios.post('/login', {

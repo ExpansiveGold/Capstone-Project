@@ -17,6 +17,7 @@ router.route("/friends")
     // get, using post because of axios limitations
     .post(async (req, res) => {
         const token = req.body.token
+        if (token === null) return res.status(403).send({ message: 'Invalid Authentication'})
         const verified = verifyToken(token)
         console.log(verified)
         var query = { $or: [{ userId: verified.id }, { friendId: verified.id }]}
@@ -57,6 +58,7 @@ router.route("/friends")
 router.route("/friends/add/:friendId")
     .post(async (req, res) => {
         const token = req.body.token
+        if (token === null) return res.status(403).send({ message: 'Invalid Authentication'})
         const verified = verifyToken(token)
         const friendId = req.params['friendId']
 
@@ -106,6 +108,7 @@ router.route("/friends/remove/:friendId")
     // delete, using post because of axios limitations
     .post(async (req, res) => {
         const token = req.body.token
+        if (token === null) return res.status(403).send({ message: 'Invalid Authentication'})
         const verified = verifyToken(token)
         const friendId = req.params['friendId']
 

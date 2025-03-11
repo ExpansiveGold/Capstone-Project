@@ -16,6 +16,7 @@ const UserColl = db().collection("Users")
 router.route("/")
     .post(async (req, res) => {
         const token = req.body.token
+        if (token === null) return res.status(403).send({ message: 'Invalid Authentication'})
         const verified = verifyToken(token)
         var query = { _id: new ObjectId(`${verified.id}`) }
         var user = await UserColl.findOne(query)
@@ -29,8 +30,8 @@ router.route("/")
 router.route("/change_password")
     .post(async (req, res) => {
         // get info send by user
-        const info = req.body
         const token = req.body.token
+        if (token === null) return res.status(403).send({ message: 'Invalid Authentication'})
         const verified = verifyToken(token)
         
         // Get user info
@@ -88,8 +89,9 @@ router.route("/change_password")
 router.route("/delete_account")
     .delete(async (req, res) => {
         // get info send by user
-        const password = req.body.password
         const token = req.body.token
+        if (token === null) return res.status(403).send({ message: 'Invalid Authentication'})
+        const password = req.body.password
         const verified = verifyToken(token)
         
         // Get user info

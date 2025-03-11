@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../components/AuthContext.js";
 import Nav from "../../components/navbar/navbar.jsx";
 import axios from "axios";
@@ -10,15 +10,22 @@ export default function Home() {
     const [friendId, setFriendId] = useState("")
     const [message, setMessage] = useState("");
     const { token, loading } = useContext(AuthContext);
+    const navigate = useNavigate()
 
-    useEffect(() => {
+    const checkToken = () => {
         if (loading === true) {
             // return null;
-            return;
+            return false;
         } else if (token === null) {
-            return <Navigate to="/login" replace />;
-            // navigate('/login')
+            // return <Navigate to="/login" replace />;
+            navigate('/login')
         } else {
+            return true
+        }
+    }
+
+    useEffect(() => {
+        if (checkToken()) {
             axios.post(`/auth/user/friends`, {
                 token: token
             })

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Nav from "../../components/navbar/navbar.jsx"
 import { AuthContext } from "../../components/AuthContext.js";
 import Popup from 'reactjs-popup';
@@ -11,15 +11,23 @@ export default function Admin(){
     const [users, setUsers] = useState([])
     const [message, setMessage] = useState('')
     const { token, loading } = useContext(AuthContext);
+
+    const navigate = useNavigate()
     
-    useEffect(() => {
+    const checkToken = () => {
         if (loading === true) {
             // return null;
-            return;
+            return false;
         } else if (token === null) {
-            return <Navigate to="/login" replace />;
-            // navigate('/login')
+            // return <Navigate to="/login" replace />;
+            navigate('/login')
         } else {
+            return true
+        }
+    }
+
+    useEffect(() => {
+        if (checkToken()) {
             axios.post(`/auth/user`, {
                 token: token
             })

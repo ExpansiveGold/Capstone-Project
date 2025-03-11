@@ -11,17 +11,24 @@ import './home.css'
 export default function Home() {
     // const [user, setUser] = useState({})
     const [friends, setFriends] = useState([])
-    const navigate = useNavigate()
     const { token, loading } = useContext(AuthContext);
-    
-    useEffect(() => {
+    const navigate = useNavigate()
+
+    const checkToken = () => {
         if (loading === true) {
             // return null;
-            return;
+            return false;
         } else if (token === null) {
-            return <Navigate to="/login" replace />;
-            // navigate('/login')
+            // return <Navigate to="/login" replace />;
+            navigate('/login')
         } else {
+            return true
+        }
+    }
+    
+    useEffect(() => {
+        console.log(token)
+        if (checkToken()) {
             axios.post(`/auth/user/friends`, {
                 token: token
             })
@@ -45,7 +52,7 @@ export default function Home() {
             </div>
         )
     }
-    console.log(friendList)
+    // console.log(friendList)
     const friend = () => {
         navigate(`/auth/user/friends`)
     }
@@ -73,7 +80,7 @@ export default function Home() {
                 <div className="form-home friendSec"> 
                     <h1 className="center-text mb-10">Friends</h1>
                     <div className="scroll">
-                        {friendList.length === 0 ? addFriends : friendList }
+                        { friendList.length === 0 ? addFriends : friendList }
                         {/* { friendList } */}
                     </div>
                 </div>

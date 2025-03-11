@@ -59,6 +59,7 @@ const FullColl = db().collection('fullMatch')
 router.route("/history") // /user/:id/history
 .post(async (req, res) => {
     const token = req.body.token
+    if (token === null) return res.status(403).send({ message: 'Invalid Authentication'})
     const verified = verifyToken(token)
     var query = { $or: [{ white: new ObjectId(`${verified.id}`) }, { black: new ObjectId(`${verified.id}`) }]}
 

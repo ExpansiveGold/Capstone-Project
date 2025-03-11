@@ -8,17 +8,23 @@ import './history.css'
 export default function History() {
     const [user, setUser] = useState({})
     const [history, setHistory] = useState({})
-    const navigate = useNavigate()
     const { token, loading } = useContext(AuthContext);
+    const navigate = useNavigate()
 
-    useEffect(() => {
+    const checkToken = () => {
         if (loading === true) {
             // return null;
-            return;
+            return false;
         } else if (token === null) {
-            return <Navigate to="/login" replace />;
-            // navigate('/login')
+            // return <Navigate to="/login" replace />;
+            navigate('/login')
         } else {
+            return true
+        }
+    }
+    
+    useEffect(() => {
+        if (checkToken()) {
             axios.post(`/auth/user/history`, {
                 token: token
             })
