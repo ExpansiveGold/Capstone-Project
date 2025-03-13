@@ -107,4 +107,9 @@
     font-size: large;
 }
 
-
+.popup-backgound{
+  height: 100vh;
+  width: 100vw;
+  background-color: #000000;
+  position: absolute;
+}

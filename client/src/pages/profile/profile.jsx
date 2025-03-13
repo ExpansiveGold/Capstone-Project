@@ -1,6 +1,7 @@
 import { useNavigate, Navigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../components/AuthContext.js";
+import { socket } from "../../socket.js";
 import Nav from "../../components/navbar/navbar.jsx";
 import Popup from 'reactjs-popup';
 import axios from "axios";
@@ -81,9 +82,9 @@ export default function Profile() {
     }
 
     const logout = () => {
-        console.log(token, localStorage.getItem('token'))
         setToken(null)
         localStorage.removeItem('token')
+        socket.disconnect()
         console.log(token, localStorage.getItem('token'))
         navigate('/login')
         // return <Navigate to="/login" replace />;
@@ -169,7 +170,7 @@ export default function Profile() {
                     <hr />
                     <div className="align">
                         <h2 className="center-text formItem">Log out</h2>
-                        <p className="buttonDel center-text formItem" onClick={logout}>Log out</p>
+                        <p className="buttonDel center-text formItem" onClick={() => {logout()}}>Log out</p>
                     </div>
                 </div>
             </div>

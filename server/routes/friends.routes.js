@@ -19,7 +19,7 @@ router.route("/friends")
         const token = req.body.token
         if (token === null) return res.status(403).send({ message: 'Invalid Authentication'})
         const verified = verifyToken(token)
-        console.log(verified)
+        // console.log(verified)
         var query = { $or: [{ userId: verified.id }, { friendId: verified.id }]}
         var friends = []
 
@@ -47,7 +47,7 @@ router.route("/friends")
             }
             // console.log(friends)
         }
-
+        console.log(verified)
         // res.status(200).send(friend)
         res.status(200).send({
             user: verified,

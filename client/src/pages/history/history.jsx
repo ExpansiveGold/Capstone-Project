@@ -17,7 +17,7 @@ export default function History() {
             return false;
         } else if (token === null) {
             // return <Navigate to="/login" replace />;
-            navigate('/login')
+            // navigate('/login')
         } else {
             return true
         }
@@ -37,6 +37,7 @@ export default function History() {
     }, []) 
 
     const watch = (matchHash) => {
+        console.log(matchHash)
         navigate(`/user/watch/${matchHash}`)
     }
 
@@ -56,7 +57,7 @@ export default function History() {
                         <p>{history[i].blackPlayer}</p>
                     </div>
                     {/* <input type="button" value="Watch" onClick={() => watch(history[i].hash)} /> */}
-                    <p className="button" onClick={() => watch(history[i].hash)}>Watch</p>
+                    <p className="button" onClick={() => watch(history[i].hash.replace(/\//g, "slash"))}>Watch</p>
                 </form>
             )
         } else {

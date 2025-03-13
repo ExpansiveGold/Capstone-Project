@@ -101,7 +101,7 @@ router.route("/play") // /match/play
 
 router.route("/watch/:hash") // /match/watch/:id
     .get(async (req, res) => {
-        var query = { hash: req.params['hash'] }
+        var query = { hash: req.params['hash'].replace(/slash/g, "/") }
         var match = await FullColl.findOne(query, (err, res) => {
             if (err) throw err;
             console.log(res)

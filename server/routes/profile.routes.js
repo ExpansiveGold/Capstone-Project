@@ -23,7 +23,7 @@ router.route("/")
         if (user === null) {
             res.status(500).json({message: 'Error finding user'})
         } else {
-            res.status(200).json(user)
+            res.status(200).json({ user: user })
         }
     })
 

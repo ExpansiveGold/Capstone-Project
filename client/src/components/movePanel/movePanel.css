@@ -26,6 +26,11 @@
     margin-right: 5px;
 }
 
+.h-90 {
+    /* height: 90%; */
+    max-height: 90%;
+}
+
 .even {
     background-color: #66666677;
 }

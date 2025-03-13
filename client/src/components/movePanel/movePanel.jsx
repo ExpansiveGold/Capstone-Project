@@ -5,10 +5,11 @@ export default function Panel(props){
     var moves = props.moves
     var selected = props.selected
     var players = props.players
+    console.log(moves)
     var movelist = []
 
     for (let move = 1; move < moves.length; move++) {
-        if (move === moves.length - 1) {
+        if (move === moves.length - 1 && move % 2 != 0 ) {
             movelist.push([moves[move].move])
             continue
         }
@@ -37,7 +38,7 @@ export default function Panel(props){
     }
 
     return (
-        <div>
+        <div className="h-90">
             {/* <div className="row pr-5 mr-5 odd moves-top">
                 <p></p>
                 <div className="row-item">
@@ -61,7 +62,7 @@ export default function Panel(props){
                 {/* <p></p> */}
             </div>
             <hr className="mr-5 line"/>
-            <div className="scroll moves-bottom">
+            <div className="scroll moves-bottom h-90">
                 { move }
             </div>
         </div>

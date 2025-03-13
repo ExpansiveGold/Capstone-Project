@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../components/AuthContext';
+import { socket } from "../../socket.js";
 import axios from "axios";
 import './login.css'
 
@@ -9,13 +10,13 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
 
-    const { token, setToken } = useContext(AuthContext)
+    const { token, session, setSession, setToken } = useContext(AuthContext)
 
     const navigate = useNavigate()
 
     
     useEffect(() => {
-        console.log(token)
+        // console.log(token)
         if (token !== null) {
         // if (!token) {
             navigate('/home')
@@ -31,14 +32,18 @@ export default function Login() {
             if (res.data.message === 'success') {
                 setToken(res.data.token)
                 localStorage.setItem('token', res.data.token)
-                // navigate(`/home/user/${user._id}`)        
+                // sessionStorage.setItem('token', res.data.token)
+                // navigate(`/home/user/${user._id}`)      
+                // socket.auth = { token : res.data.token }
+                // socket.connect()
                 navigate(`/home`)        
             } 
         })
         .catch((res) => {
-            console.log('Auth failed: ',res)
+            // console.log('Auth failed: ',res)
             setToken(null)
             localStorage.removeItem('token')
+            // sessionStorage.removeItem('token')
             setMessage(res.response.data.message)
         })
     }
